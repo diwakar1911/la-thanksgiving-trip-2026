@@ -46,6 +46,16 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .parking-price{display:inline-block;margin-inline-start:.32rem;padding:0 .22rem;border-radius:5px;background:#e8eee2;color:var(--ink);font-size:.64rem;font-weight:700;line-height:1.25;vertical-align:middle;white-space:nowrap}
 .parking-price+.caption{margin-top:4px}
 .admission-price.free-admission{background:#e8eee2;color:var(--ink)}
+.shortlist-button[aria-pressed="true"]{background:var(--ink);color:#fffdf7;border-color:var(--ink)}
+#shortlist{padding-block:24px 48px}
+#shortlist h2{font-size:clamp(1.8rem,5vw,2.7rem)}
+#shortlist:not([hidden])~main{display:none}
+.shortlist-items{list-style:none;padding:0;margin:12px 0}
+.shortlist-item{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:8px 0}
+.shortlist-item img{width:64px;height:48px;object-fit:cover;border-radius:6px}
+.shortlist-item small{display:block;color:var(--muted)}
+.shortlist-item a{font-size:.85rem}
+#sync-status{margin:4px 0;font-size:.8rem}
 </style>
 
 <link rel="stylesheet" href="trip-map.css?v=11">
@@ -53,7 +63,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <body>
 <section class="hero" aria-labelledby="trip-title">
 <img id="hero-photo" alt="" src="images/venice/06.jpg">
-<div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1><nav class="trip-nav" aria-label="Trip sections"><a href="#beaches">Beaches</a><a href="#things-to-do">Things to Do</a><a id="map-link" href="#map">Map view</a></nav></div>
+<div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1><nav class="trip-nav" aria-label="Trip sections"><a href="#beaches">Beaches</a><a href="#things-to-do">Things to Do</a><a id="map-link" href="#map">Map view</a><a id="shortlist-link" href="#shortlist">Shortlist</a></nav><p id="sync-status" role="status" hidden></p></div>
 </section>
 <section id="map-view" class="wrap" aria-labelledby="map-title" hidden>
   <h2 id="map-title" tabindex="-1">Trip map</h2>
@@ -74,8 +84,12 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
     <div id="map-stop-card"></div>
   </div>
 </section>
+<section id="shortlist" class="wrap" aria-labelledby="shortlist-title" hidden>
+  <h2 id="shortlist-title" tabindex="-1">Shortlist</h2>
+  <p id="shortlist-empty">Save stops using the Shortlist button.</p>
+  <ul id="shortlist-items" class="shortlist-items"></ul>
+</section>
 <main id="beaches" class="wrap">
-<p id="sync-status" role="status" hidden></p>
 <details id="beaches-section"><summary class="section-head"><div><h2>Beaches</h2><p>19 beaches · 211 gallery photos</p></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="section-tools"><button class="toggle" type="button" id="toggle-all" hidden>Expand all galleries</button></div>
 <div id="beach-list">
@@ -1348,6 +1362,73 @@ const pendingChanges = new Map();
 const visibilityControls = new Map();
 let syncing = false;
 const minimizedCards = new Set();
+const shortlistedCards = new Set();
+const shortlistControls = new Map();
+const shortlistPage = document.querySelector('#shortlist');
+const shortlistItems = document.querySelector('#shortlist-items');
+const shortlistLink = document.querySelector('#shortlist-link');
+const shortlistStorageKey = 'la-thanksgiving-2026-shared-shortlist-cache';
+
+function showShortlist() {
+  shortlistPage.hidden = location.hash !== '#shortlist';
+  if (shortlistPage.hidden) shortlistLink.removeAttribute('aria-current');
+  else {
+    shortlistLink.setAttribute('aria-current', 'page');
+    window.scrollTo(0, 0);
+    document.querySelector('#shortlist-title').focus({ preventScroll: true });
+  }
+}
+
+function changeShortlist(key, shortlisted) {
+  if (shortlisted) shortlistedCards.add(key);
+  else shortlistedCards.delete(key);
+  pendingChanges.set('shortlist:' + key, { key, shortlisted });
+  renderShortlist();
+  void syncCardVisibility();
+}
+
+function renderShortlist() {
+  const rows = [];
+  for (const [key, { card, button, title }] of shortlistControls) {
+    const saved = shortlistedCards.has(key);
+    button.setAttribute('aria-pressed', String(saved));
+    button.setAttribute('aria-label', (saved ? 'Remove from shortlist: ' : 'Shortlist: ') + title);
+    button.textContent = saved ? '★ Saved' : '☆ Shortlist';
+    if (!saved) continue;
+    const row = document.createElement('li');
+    row.className = 'shortlist-item';
+    const image = card.querySelector('summary .cover').cloneNode(false);
+    const info = document.createElement('div');
+    const name = document.createElement('strong');
+    name.textContent = title;
+    const costs = document.createElement('small');
+    costs.textContent = [...card.querySelectorAll('summary .admission-price, summary .parking-price')]
+      .map(badge => badge.textContent.trim()).join(' · ');
+    const directions = card.querySelector('a[href^="https://www.google.com/maps/"]').cloneNode(false);
+    directions.textContent = 'Directions ↗';
+    info.append(name, costs, directions);
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'card-visibility';
+    remove.textContent = 'Remove';
+    remove.setAttribute('aria-label', 'Remove ' + title + ' from shortlist');
+    remove.addEventListener('click', () => {
+      changeShortlist(key, false);
+      (shortlistItems.querySelector('button') || document.querySelector('#shortlist-title')).focus();
+    });
+    row.append(image, info, remove);
+    rows.push(row);
+  }
+  shortlistItems.replaceChildren(...rows);
+  document.querySelector('#shortlist-empty').hidden = rows.length > 0;
+}
+
+try {
+  const saved = JSON.parse(localStorage.getItem(shortlistStorageKey) || '[]');
+  if (Array.isArray(saved)) saved.forEach(key => shortlistedCards.add(key));
+} catch {
+  // The shortlist can still be fetched from the database.
+}
 try {
   const saved = JSON.parse(localStorage.getItem(visibilityStorageKey) || '[]');
   if (Array.isArray(saved)) {
@@ -1366,7 +1447,7 @@ async function syncCardVisibility() {
       const response = await fetch(visibilityEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key, hidden: change.hidden }),
+        body: JSON.stringify(change),
         signal: AbortSignal.timeout(8000),
       });
       if (!response.ok) throw new Error('Unable to save visibility');
@@ -1378,13 +1459,21 @@ async function syncCardVisibility() {
       signal: AbortSignal.timeout(8000),
     });
     if (!response.ok) throw new Error('Unable to fetch visibility');
-    const { hidden } = await response.json();
+    const { hidden, shortlisted } = await response.json();
     if (!Array.isArray(hidden)) throw new Error('Invalid visibility data');
     minimizedCards.clear();
     hidden.filter(key => visibilityControls.has(key)).forEach(key => minimizedCards.add(key));
-    for (const [key, { hidden: hide }] of pendingChanges) {
-      if (hide) minimizedCards.add(key);
-      else minimizedCards.delete(key);
+    if (!Array.isArray(shortlisted)) throw new Error('Invalid shortlist data');
+    const nextShortlist = new Set(shortlisted.filter(key => shortlistControls.has(key)));
+    for (const { key, hidden: hide, shortlisted: save } of pendingChanges.values()) {
+      const state = typeof save === 'boolean' ? nextShortlist : minimizedCards;
+      if (save ?? hide) state.add(key);
+      else state.delete(key);
+    }
+    if (nextShortlist.size !== shortlistedCards.size || [...nextShortlist].some(key => !shortlistedCards.has(key))) {
+      shortlistedCards.clear();
+      nextShortlist.forEach(key => shortlistedCards.add(key));
+      renderShortlist();
     }
     for (const [key, { card, showState }] of visibilityControls) {
       if (card.classList.contains('is-minimized') !== minimizedCards.has(key)) {
@@ -1394,6 +1483,7 @@ async function syncCardVisibility() {
     }
     try {
       localStorage.setItem(visibilityStorageKey, JSON.stringify([...minimizedCards]));
+      localStorage.setItem(shortlistStorageKey, JSON.stringify([...shortlistedCards]));
     } catch {
       // The shared list still works when browser storage is unavailable.
     }
@@ -1419,7 +1509,16 @@ function bindCardVisibility(card, group) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'card-visibility';
-  actions.append(button, summary.querySelector('.indicator'));
+  const save = document.createElement('button');
+  save.type = 'button';
+  save.className = 'card-visibility shortlist-button';
+  save.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    changeShortlist(key, !shortlistedCards.has(key));
+  });
+  shortlistControls.set(key, { card, button: save, title });
+  actions.append(save, button, summary.querySelector('.indicator'));
   summary.append(actions);
 
   function showState() {
@@ -1441,7 +1540,7 @@ function bindCardVisibility(card, group) {
     if (minimizedCards.has(key)) minimizedCards.delete(key);
     else minimizedCards.add(key);
     showState();
-    pendingChanges.set(key, { hidden: minimizedCards.has(key) });
+    pendingChanges.set(key, { key, hidden: minimizedCards.has(key) });
     card.dispatchEvent(new Event('visibilitychange'));
     void syncCardVisibility();
   });
@@ -1505,6 +1604,9 @@ function showPhoto(position) {
 });
 beachCards.forEach(card => bindCardVisibility(card, 'beach'));
 activityCards.forEach(card => bindCardVisibility(card, 'activity'));
+renderShortlist();
+showShortlist();
+window.addEventListener('hashchange', showShortlist);
 bindGalleryToggle(document.querySelector('#toggle-all'), beachCards);
 const activityToggle = document.querySelector('#toggle-activities');
 bindGalleryToggle(activityToggle, activityCards);
