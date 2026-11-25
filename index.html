@@ -21,12 +21,9 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .trip-nav{display:flex;gap:18px;margin-top:12px;font-size:.85rem;font-weight:650}
 #things-to-do{margin-top:48px;scroll-margin-top:18px}
 #things-to-do .section-head{cursor:default}
-.activity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
-.activity{background:#fffdf7;border:1px solid var(--line);border-radius:16px;padding:17px}
-.activity h3{font-size:1.65rem}
-.activity p{margin:7px 0;color:var(--muted);font-size:.9rem}
 .activity p.activity-hours{color:var(--ink);font-weight:700}
-.activity-links{display:flex;gap:16px;margin-top:10px;font-size:.85rem;font-weight:650}
+.activity-links{display:flex;gap:16px;margin:10px 0 14px;font-size:.85rem;font-weight:650}
+.activity-category{margin:22px 0 28px}.activity-category>h3{font-size:1.35rem;margin:0 0 10px;font-family:inherit;letter-spacing:0;font-weight:700}
 </style>
 
 </head>
@@ -366,12 +363,60 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 </details></div>
 </details>
 <section id="things-to-do" aria-labelledby="activity-heading">
-<div class="section-head"><h2 id="activity-heading">Things to Do</h2></div>
-<div class="activity-grid"><article class="activity"><span class="meta">Santa Monica</span><h3>Pacific Park at Santa Monica Pier</h3><p>Ride the Ferris wheel or stop for ocean views from the pier. The pier is free and rides cost extra.</p><p class="activity-hours">Thanksgiving Day · Pacific Park 11 a.m.–9 p.m.</p><div class="activity-links"><a href="https://www.discoverlosangeles.com/things-to-do/thanksgiving-day-attractions-events-in-los-angeles" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Pacific%20Park%20at%20Santa%20Monica%20Pier%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
-<article class="activity"><span class="meta">Long Beach</span><h3>Aquarium of the Pacific</h3><p>An indoor stop near Rainbow Harbor. Aquarium admission is paid. The Thanksgiving buffet is a separate reservation.</p><p class="activity-hours">Thanksgiving Day · Aquarium 9 a.m.–5 p.m.</p><div class="activity-links"><a href="https://www.aquariumofpacific.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Aquarium%20of%20the%20Pacific%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
-<article class="activity"><span class="meta">Brentwood</span><h3>Getty Center</h3><p>Art, gardens and city views. Reserve free timed entry. Standard parking is $25.</p><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://www.getty.edu/visit/center/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Getty%20Center%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
-<article class="activity"><span class="meta">Downtown LA</span><h3>Grand Central Market</h3><p>An indoor food hall with multiple lunch options. The market lists regular hours of 8 a.m.–9 p.m.</p><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://grandcentralmarket.com/visit-the-market/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Grand%20Central%20Market%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
-<article class="activity"><span class="meta">Rancho Palos Verdes</span><h3>Point Vicente overlook</h3><p>Ocean and lighthouse views from the bluff park. Start at the Interpretive Center parking lot and choose a short out-and-back.</p><p class="activity-hours">Outdoor stop · Check museum hours separately</p><div class="activity-links"><a href="https://www.rpvca.gov/Facilities/Facility/Details/-13" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Point%20Vicente%20overlook%20California" target="_blank" rel="noopener">Maps ↗</a></div></article></div>
+<div class="section-head"><h2 id="activity-heading">Things to Do</h2><button class="toggle" id="toggle-activities" hidden>Expand all galleries</button></div>
+<section class="activity-category" aria-labelledby="outdoors-heading"><h3 id="outdoors-heading">Outdoors &amp; views</h3>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/pacific-park/01.jpg" alt=""><div><span class="meta">Santa Monica · 5 photos</span><h3>Pacific Park at Santa Monica Pier</h3><span class="caption">Ride the Ferris wheel or stop for ocean views from the pier. The pier is free and rides cost extra.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Thanksgiving Day · Pacific Park 11 a.m.–9 p.m.</p><div class="activity-links"><a href="https://www.discoverlosangeles.com/things-to-do/thanksgiving-day-attractions-events-in-los-angeles" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Pacific%20Park%20at%20Santa%20Monica%20Pier%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Pacific Park at Santa Monica Pier photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Santa_Monica_Ferris_Wheel_%26_Roller_Coaster_%2817214231021%29.jpg" aria-label="Pacific Park at Santa Monica Pier photo 1"><img loading="lazy" src="images/activities/pacific-park/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Santa_Monica_Bumper_Cars_%283662626607%29.jpg" aria-label="Pacific Park at Santa Monica Pier photo 2"><img loading="lazy" src="images/activities/pacific-park/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Santa_Monica_Boardwalk_%283663219062%29.jpg" aria-label="Pacific Park at Santa Monica Pier photo 3"><img loading="lazy" src="images/activities/pacific-park/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Santa_Monica_Pier_%26_parking_%28July_2024%29.JPG" aria-label="Pacific Park at Santa Monica Pier photo 4"><img loading="lazy" src="images/activities/pacific-park/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Ferris_Wheel_-_Santa_Monica_Pier_-_panoramio.jpg" aria-label="Pacific Park at Santa Monica Pier photo 5"><img loading="lazy" src="images/activities/pacific-park/05.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/point-vicente/01.jpg" alt=""><div><span class="meta">Rancho Palos Verdes · 5 photos</span><h3>Point Vicente overlook</h3><span class="caption">Ocean and lighthouse views from the bluff park. Start at the Interpretive Center parking lot and choose a short out-and-back.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Outdoor stop · Check museum hours separately</p><div class="activity-links"><a href="https://www.rpvca.gov/Facilities/Facility/Details/-13" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Point%20Vicente%20overlook%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Point Vicente overlook photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Point_Vicente_Lighthouse_on_Cliff.jpeg" aria-label="Point Vicente overlook photo 1"><img loading="lazy" src="images/activities/point-vicente/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Point_Vicente_Lighthouse_%2844623086120%29.jpg" aria-label="Point Vicente overlook photo 2"><img loading="lazy" src="images/activities/point-vicente/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Point_Vicente_Light_-_002.jpg" aria-label="Point Vicente overlook photo 3"><img loading="lazy" src="images/activities/point-vicente/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:DSC_0116_%2839162673355%29.jpg" aria-label="Point Vicente overlook photo 4"><img loading="lazy" src="images/activities/point-vicente/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:DSC_0122_%2828281942739%29.jpg" aria-label="Point Vicente overlook photo 5"><img loading="lazy" src="images/activities/point-vicente/05.jpg" alt=""></a>
+</div></div></details></section>
+<section class="activity-category" aria-labelledby="museums-heading"><h3 id="museums-heading">Museums &amp; aquarium</h3>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/aquarium/01.jpg" alt=""><div><span class="meta">Long Beach · 5 photos</span><h3>Aquarium of the Pacific</h3><span class="caption">An indoor stop near Rainbow Harbor. Aquarium admission is paid. The Thanksgiving buffet is a separate reservation.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Thanksgiving Day · Aquarium 9 a.m.–5 p.m.</p><div class="activity-links"><a href="https://www.aquariumofpacific.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Aquarium%20of%20the%20Pacific%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Aquarium of the Pacific photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Aquarium_of_the_Pacific_2024_February.jpg" aria-label="Aquarium of the Pacific photo 1"><img loading="lazy" src="images/activities/aquarium/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Aquarium_of_the_Pacific_Petting_Pool.jpg" aria-label="Aquarium of the Pacific photo 2"><img loading="lazy" src="images/activities/aquarium/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:026_Round_Rays_In_A_Long_Water_Tank_With_Sand_%281%29.jpg" aria-label="Aquarium of the Pacific photo 3"><img loading="lazy" src="images/activities/aquarium/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Acanthurus_blochii_-_Acuario_del_Pac%C3%ADfico%2C_Long_Beach%2CCA.jpg" aria-label="Aquarium of the Pacific photo 4"><img loading="lazy" src="images/activities/aquarium/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Aquarium_of_the_Pacific_Building_July_2023.JPG" aria-label="Aquarium of the Pacific photo 5"><img loading="lazy" src="images/activities/aquarium/05.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/getty/01.jpg" alt=""><div><span class="meta">Brentwood · 5 photos</span><h3>Getty Center</h3><span class="caption">Art, gardens and city views. Reserve free timed entry. Standard parking is $25.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://www.getty.edu/visit/center/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Getty%20Center%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Getty Center photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Getty_Center_central_garden.jpg" aria-label="Getty Center photo 1"><img loading="lazy" src="images/activities/getty/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Aerial_Getty_Museum.jpg" aria-label="Getty Center photo 2"><img loading="lazy" src="images/activities/getty/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:2024_Getty_Center_07.jpg" aria-label="Getty Center photo 3"><img loading="lazy" src="images/activities/getty/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Architectural_Detail_-_The_Getty_Center_-_Los_Angeles_-_California_-_USA_-_01_%2832229476357%29.jpg" aria-label="Getty Center photo 4"><img loading="lazy" src="images/activities/getty/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Blick_vom_Getty_Center_auf_die_Innenstadt_von_Los_Angeles..jpg" aria-label="Getty Center photo 5"><img loading="lazy" src="images/activities/getty/05.jpg" alt=""></a>
+</div></div></details></section>
+<section class="activity-category" aria-labelledby="food-heading"><h3 id="food-heading">Food &amp; markets</h3>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/grand-central-market/01.jpg" alt=""><div><span class="meta">Downtown LA · 5 photos</span><h3>Grand Central Market</h3><span class="caption">An indoor food hall with multiple lunch options. The market lists regular hours of 8 a.m.–9 p.m.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://grandcentralmarket.com/visit-the-market/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Grand%20Central%20Market%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Grand Central Market photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Grand_Central_Market%2C_Los_Angeles%2C_Interior_view_20110807_1.jpg" aria-label="Grand Central Market photo 1"><img loading="lazy" src="images/activities/grand-central-market/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Grand_Central_Market_-_February_2024_-_Sarah_Stierch_01.jpg" aria-label="Grand Central Market photo 2"><img loading="lazy" src="images/activities/grand-central-market/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:China_Cafe_-_February_2024_-_Sarah_Stierch.jpg" aria-label="Grand Central Market photo 3"><img loading="lazy" src="images/activities/grand-central-market/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Grand_Central_Market_July_2022_%282%29.JPG" aria-label="Grand Central Market photo 4"><img loading="lazy" src="images/activities/grand-central-market/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Grand_Central_Market_Los_Angeles_P1000560.jpg" aria-label="Grand Central Market photo 5"><img loading="lazy" src="images/activities/grand-central-market/05.jpg" alt=""></a>
+</div></div></details></section>
 </section>
 </main>
 <footer><div class="wrap">LA Thanksgiving Trip 2026</div></footer>
@@ -383,15 +428,24 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <script>
 
 const section = document.querySelector('#beaches-section');
-const cards = [...section.querySelectorAll('.beach')];
-const toggle = document.querySelector('#toggle-all');
+const beachCards = [...section.querySelectorAll('.beach')];
+const activityCards = [...document.querySelectorAll('#things-to-do .activity')];
 const viewer = document.querySelector('#viewer');
 const viewerImage = document.querySelector('#viewer-image');
 let photos = [];
 let index = 0;
 
-function updateToggle() {
-  toggle.textContent = cards.every(card => card.open) ? 'Collapse all galleries' : 'Expand all galleries';
+function bindGalleryToggle(button, cards) {
+  function updateLabel() {
+    button.textContent = cards.every(card => card.open) ? 'Collapse all galleries' : 'Expand all galleries';
+  }
+  cards.forEach(card => card.addEventListener('toggle', updateLabel));
+  button.hidden = false;
+  button.addEventListener('click', () => {
+    const open = cards.some(card => !card.open);
+    cards.forEach(card => { card.open = open; });
+    updateLabel();
+  });
 }
 
 function showPhoto(position) {
@@ -410,8 +464,7 @@ function showPhoto(position) {
     photo.closest('.beach').querySelector('h3').textContent + ' · ' + (index + 1) + ' / ' + photos.length;
 }
 
-cards.forEach(card => {
-  card.addEventListener('toggle', updateToggle);
+[...beachCards, ...activityCards].forEach(card => {
   const gallery = [...card.querySelectorAll('.photo')];
   gallery.forEach((photo, position) => photo.addEventListener('click', event => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || !viewer.showModal) return;
@@ -421,12 +474,8 @@ cards.forEach(card => {
     viewer.showModal();
   }));
 });
-toggle.hidden = false;
-toggle.addEventListener('click', () => {
-  const open = cards.some(card => !card.open);
-  cards.forEach(card => { card.open = open; });
-  updateToggle();
-});
+bindGalleryToggle(document.querySelector('#toggle-all'), beachCards);
+bindGalleryToggle(document.querySelector('#toggle-activities'), activityCards);
 function openBeachSection() {
   if (location.hash === '#beaches') section.open = true;
 }
