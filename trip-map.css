@@ -57,3 +57,12 @@ body.showing-trip-map:has(#map-stop-panel:not([hidden])) {
 #map-stop-card .beach { margin: 0 0 6px; }
 .map-popup a { display: inline-block; padding: 3px 0; font-weight: 650; }
 .map-popup-photo { display: block; flex: 0 0 48px; width: 48px; height: 40px; object-fit: cover; border-radius: 5px; background: #dae6df; }
+#map-stop-card .beach > summary { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 9px; padding: 7px 9px; }
+#map-stop-card .cover { height: 44px; }
+#map-stop-card h3 { font-size: clamp(1.05rem, 3vw, 1.4rem); }
+#map-stop-card .meta { font-size: .6rem; }
+#map-stop-card .caption, #map-stop-card .inside, #map-stop-card .tip,
+#map-stop-card .activity-links, #map-stop-card .visit-details dd { font-size: .75rem; }
+#map-stop-card .inside { padding: 9px; }
+#map-stop-card .visit-details > div { padding: 6px 8px; }
+#map-stop-card .gallery .photo { flex-basis: clamp(120px, 46%, 200px); }
