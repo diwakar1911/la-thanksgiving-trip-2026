@@ -150,7 +150,7 @@
       }
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
         .addTo(pins).bindPopup(() => stopPopup(stop, name, detail), { maxWidth: 235 });
-      marker.on('click', () => showCard(stop));
+      marker.on('popupopen', () => showCard(stop));
       button.addEventListener('click', () => {
         showCard(stop);
         canvas.scrollIntoView({ block: 'nearest' });
