@@ -4,7 +4,6 @@
   const canvas = document.querySelector('#trip-map');
   const panel = document.querySelector('#map-stop-panel');
   const panelCard = document.querySelector('#map-stop-card');
-  const closeDetails = document.querySelector('#map-stop-close');
   const status = document.querySelector('#map-status');
   const locate = document.querySelector('#map-location');
   const fit = document.querySelector('#map-reset');
@@ -182,6 +181,7 @@
 
   function switchView() {
     const showing = location.hash === '#map';
+    document.body.classList.toggle('showing-trip-map', showing);
     view.hidden = !showing;
     listView.hidden = showing;
     const mapLink = document.querySelector('#map-link');
@@ -222,11 +222,6 @@
         ? 'Allow location access in your browser settings to see nearby stops.'
         : 'Couldn’t get your location. Try again, or browse the map.';
     }, { timeout: 10000, maximumAge: 60000 });
-  });
-  closeDetails.addEventListener('click', () => {
-    restoreCard();
-    document.querySelector('#map-title').focus({ preventScroll: true });
-    view.scrollIntoView({ block: 'start' });
   });
   fit.addEventListener('click', fitPins);
   for (const button of filters) {

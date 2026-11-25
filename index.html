@@ -48,7 +48,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .admission-price.free-admission{background:#e8eee2;color:var(--ink)}
 </style>
 
-<link rel="stylesheet" href="trip-map.css?v=5">
+<link rel="stylesheet" href="trip-map.css?v=6">
 </head>
 <body>
 <section class="hero" aria-labelledby="trip-title">
@@ -56,22 +56,19 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1><nav class="trip-nav" aria-label="Trip sections"><a href="#beaches">Beaches</a><a href="#things-to-do">Things to Do</a><a id="map-link" href="#map">Map view</a></nav></div>
 </section>
 <section id="map-view" class="wrap" aria-labelledby="map-title" hidden>
-  <div class="map-toolbar">
-    <h2 id="map-title" tabindex="-1">Trip map</h2>
-    <button class="toggle" type="button" id="map-location">Use my location</button>
-  </div>
+  <h2 id="map-title" tabindex="-1">Trip map</h2>
   <div class="map-controls">
     <div role="group" aria-label="Show on map" id="map-filters">
       <button class="toggle" type="button" data-kind="all" aria-pressed="true">All</button>
       <button class="toggle" type="button" data-kind="beach" aria-pressed="false">Beaches</button>
       <button class="toggle" type="button" data-kind="activity" aria-pressed="false">Things to Do</button>
     </div>
+    <button class="toggle" type="button" id="map-location">Use my location</button>
     <button class="toggle" type="button" id="map-reset" hidden>Fit pins</button>
   </div>
   <p id="map-status" role="status"></p>
   <div id="trip-map" aria-label="Interactive map of trip stops"></div>
   <div id="map-stop-panel" hidden>
-    <button class="toggle" type="button" id="map-stop-close">Close stop details</button>
     <div id="map-stop-card"></div>
   </div>
 </section>
@@ -1306,6 +1303,6 @@ viewer.addEventListener('keydown', event => {
   }
 });
 </script>
-<script src="trip-map.js?v=8" defer></script>
+<script src="trip-map.js?v=9" defer></script>
 </body>
 </html>
