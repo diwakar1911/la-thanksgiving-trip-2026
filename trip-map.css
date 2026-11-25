@@ -12,6 +12,8 @@
 #trip-map { height: clamp(330px, 61vh, 650px); background: #dae6df; isolation: isolate; }
 #trip-map[hidden], #map-view [hidden] { display: none; }
 .map-popup small { display: block; color: var(--muted); }
+#map-filters .toggle { min-height: 34px; padding: 4px 9px; font-size: .75rem; }
+.map-popup { display: flex; gap: 8px; align-items: flex-start; }
 .map-popup strong { font-size: .95rem; }
 .map-pin { width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; background: #a44525; box-shadow: 0 1px 5px #0007; }
 .map-pin.beach-pin { background: #126965; }
@@ -25,4 +27,4 @@
 #map-stop-panel { margin-top: 12px; scroll-margin-top: 12px; }
 #map-stop-card .beach { margin-top: 8px; }
 .map-popup a { display: inline-block; padding: 6px 0; font-weight: 650; }
-.map-popup-photo { display: block; max-width: 100%; width: 120px; height: 64px; object-fit: cover; border-radius: 8px; margin-bottom: 5px; background: #dae6df; }
+.map-popup-photo { display: block; flex: 0 0 48px; width: 48px; height: 40px; object-fit: cover; border-radius: 8px; background: #dae6df; }

@@ -16,6 +16,7 @@
     point: card.dataset.point.split(',').map(Number),
     kind: card.classList.contains('activity') ? 'activity' : 'beach',
     directions: card.querySelector('a[href^="https://www.google.com/maps/"]').href,
+    admission: card.querySelector('summary .admission-price')?.textContent.trim(),
     parking: card.querySelector('.parking-price').textContent.trim()
   }));
   let filter = 'all';
@@ -80,14 +81,22 @@
     const photo = document.createElement('img');
     photo.className = 'map-popup-photo';
     photo.src = stop.photo;
-    photo.alt = stop.name;
-    photo.width = 120;
-    photo.height = 64;
+    photo.alt = '';
+    photo.width = 48;
+    photo.height = 40;
     const name = document.createElement('strong');
     name.textContent = stop.name;
     const detail = document.createElement('small');
     detail.textContent = (position ? distance(stop.point).toFixed(1) + ' mi straight-line · ' : '') + stop.parking;
-    popup.append(photo, name, detail, directions(stop));
+    const body = document.createElement('div');
+    body.append(name);
+    if (stop.admission) {
+      const admission = document.createElement('small');
+      admission.textContent = stop.admission === 'Free admission' ? stop.admission : 'Admission · ' + stop.admission;
+      body.append(admission);
+    }
+    body.append(detail, directions(stop));
+    popup.append(photo, body);
     return popup;
   }
 
