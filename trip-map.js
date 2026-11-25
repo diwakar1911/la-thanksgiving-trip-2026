@@ -87,8 +87,8 @@
     photo.className = 'map-popup-photo';
     photo.src = stop.photo;
     photo.alt = stop.name;
-    photo.width = 220;
-    photo.height = 116;
+    photo.width = 120;
+    photo.height = 64;
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = 'View stop';
