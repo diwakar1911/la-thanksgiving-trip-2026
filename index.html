@@ -46,6 +46,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .parking-price{display:inline-block;margin-inline-start:.32rem;padding:0 .22rem;border-radius:5px;background:#e8eee2;color:var(--ink);font-size:.64rem;font-weight:700;line-height:1.25;vertical-align:middle;white-space:nowrap}
 .parking-price+.caption{margin-top:4px}
 .admission-price.free-admission{background:#e8eee2;color:var(--ink)}
+.shortlist-button{font-size:1rem;line-height:1.1;min-width:30px;min-height:30px}
 .shortlist-button[aria-pressed="true"]{background:var(--ink);color:#fffdf7;border-color:var(--ink)}
 #shortlist{padding-block:24px 48px}
 #shortlist h2{font-size:clamp(1.8rem,5vw,2.7rem)}
@@ -1393,7 +1394,7 @@ function renderShortlist() {
     const saved = shortlistedCards.has(key);
     button.setAttribute('aria-pressed', String(saved));
     button.setAttribute('aria-label', (saved ? 'Remove from shortlist: ' : 'Shortlist: ') + title);
-    button.textContent = saved ? '★ Saved' : '☆ Shortlist';
+    button.textContent = saved ? '★' : '☆';
     if (!saved) continue;
     const row = document.createElement('li');
     row.className = 'shortlist-item';
