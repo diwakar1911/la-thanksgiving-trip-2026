@@ -72,6 +72,7 @@
     card.hidden = false;
     card.open = true;
     panel.hidden = false;
+    panel.scrollTop = 0;
   }
 
   function stopPopup(stop) {
@@ -119,7 +120,7 @@
     pins.clearLayers();
     for (const stop of visible) {
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
-        .addTo(pins).bindPopup(() => stopPopup(stop), { maxWidth: 235 });
+        .addTo(pins).bindPopup(() => stopPopup(stop), { maxWidth: 235, keepInView: true });
       marker.on('popupopen', () => showCard(stop));
     }
   }
@@ -153,6 +154,10 @@
       document.head.append(element);
     }))).then(() => {
       map = L.map(canvas, { scrollWheelZoom: false }).setView([34, -118.38], 9);
+      const resizeMap = new ResizeObserver(() => {
+        if (!view.hidden) map.invalidateSize();
+      });
+      resizeMap.observe(canvas);
       pins = L.layerGroup().addTo(map);
       const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

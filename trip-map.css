@@ -28,7 +28,28 @@
   #map-view { width: calc(100% - 20px); }
   #map-view .map-controls .toggle { padding-inline: 7px; }
 }
-#map-stop-panel { margin-top: 12px; scroll-margin-top: 12px; }
-#map-stop-card .beach { margin-top: 8px; }
+body.showing-trip-map:has(#map-stop-panel:not([hidden])) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100vh;
+  height: 100dvh;
+}
+.showing-trip-map:has(#map-stop-panel:not([hidden])) footer { display: none; }
+#map-view:has(#map-stop-panel:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-block: 0;
+  padding-bottom: 0;
+}
+#map-view:has(#map-stop-panel:not([hidden])) #trip-map { flex: 1 1 0; min-height: 100px; height: auto; }
+#map-stop-panel {
+  flex: 0 0 50vh;
+  flex-basis: 50dvh;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  margin-top: 6px;
+}
+#map-stop-card .beach { margin: 0 0 6px; }
 .map-popup a { display: inline-block; padding: 6px 0; font-weight: 650; }
 .map-popup-photo { display: block; flex: 0 0 48px; width: 48px; height: 40px; object-fit: cover; border-radius: 8px; background: #dae6df; }
