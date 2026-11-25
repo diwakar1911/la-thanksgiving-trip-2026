@@ -63,6 +63,7 @@
   }
 
   function showCard(stop) {
+    if (selected?.card === stop.card) return;
     restoreCard();
     const { card } = stop;
     const placeholder = document.createComment('Trip stop list position');
@@ -72,7 +73,9 @@
     card.hidden = false;
     card.open = true;
     panel.hidden = false;
-    map?.closePopup();
+  }
+
+  function scrollToCard() {
     closeDetails.focus({ preventScroll: true });
     panel.scrollIntoView({ block: 'start' });
   }
@@ -90,7 +93,11 @@
     button.type = 'button';
     button.textContent = 'View stop';
     button.setAttribute('aria-controls', panel.id);
-    button.addEventListener('click', () => showCard(stop));
+    button.addEventListener('click', () => {
+      showCard(stop);
+      map.closePopup();
+      scrollToCard();
+    });
     popup.append(photo, name.cloneNode(true), detail.cloneNode(true), button, directions(stop));
     return popup;
   }
@@ -135,12 +142,17 @@
       results.append(row);
 
       if (!map) {
-        button.addEventListener('click', () => showCard(stop));
+        button.addEventListener('click', () => {
+          showCard(stop);
+          scrollToCard();
+        });
         continue;
       }
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
         .addTo(pins).bindPopup(() => stopPopup(stop, name, detail), { maxWidth: 235 });
+      marker.on('click', () => showCard(stop));
       button.addEventListener('click', () => {
+        showCard(stop);
         canvas.scrollIntoView({ block: 'nearest' });
         map.setView(stop.point, Math.max(map.getZoom(), 14));
         marker.openPopup();
