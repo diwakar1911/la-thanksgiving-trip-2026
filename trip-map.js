@@ -220,8 +220,9 @@
     view.hidden = !showing;
     listView.hidden = showing;
     const mapLink = document.querySelector('#map-link');
+    mapLink.textContent = showing ? 'List view' : 'Map view';
+    mapLink.href = showing ? '#beaches' : '#map';
     if (showing) {
-      mapLink.setAttribute('aria-current', 'page');
       window.scrollTo(0, 0);
       document.querySelector('#map-title').focus({ preventScroll: true });
       render();
@@ -229,7 +230,6 @@
       else loadMap();
     } else {
       restoreCard();
-      mapLink.removeAttribute('aria-current');
       if (location.hash === '#beaches') document.querySelector('#beaches-section').open = true;
       if (location.hash === '#beaches' || location.hash === '#things-to-do') {
         document.querySelector(location.hash).scrollIntoView();
