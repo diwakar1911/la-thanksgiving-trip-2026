@@ -18,16 +18,25 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .visit-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 18px}.visit-details>div{background:#f3f3e8;border-radius:10px;padding:11px 13px}.visit-details dt{font-size:.78rem;font-weight:750;margin-bottom:3px}.visit-details dd{margin:0;color:var(--muted);font-size:.86rem}.visit-details a{display:inline-block;font-weight:650;white-space:nowrap}@media(max-width:650px){.visit-details{grid-template-columns:1fr;gap:6px}}
 
 
+.trip-nav{display:flex;gap:18px;margin-top:12px;font-size:.85rem;font-weight:650}
+#things-to-do{margin-top:48px;scroll-margin-top:18px}
+#things-to-do .section-head{cursor:default}
+.activity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.activity{background:#fffdf7;border:1px solid var(--line);border-radius:16px;padding:17px}
+.activity h3{font-size:1.65rem}
+.activity p{margin:7px 0;color:var(--muted);font-size:.9rem}
+.activity p.activity-hours{color:var(--ink);font-weight:700}
+.activity-links{display:flex;gap:16px;margin-top:10px;font-size:.85rem;font-weight:650}
 </style>
 
 </head>
 <body>
 <section class="hero" aria-labelledby="trip-title">
 <img id="hero-photo" alt="" src="images/venice/06.jpg">
-<div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1></div>
+<div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1><nav class="trip-nav" aria-label="Trip sections"><a href="#beaches">Beaches</a><a href="#things-to-do">Things to Do</a></nav></div>
 </section>
 <main id="beaches" class="wrap">
-<details id="beaches-section"><summary class="section-head"><div><h2>Beaches</h2><p>15 beaches · 167 gallery photos</p></div><span class="indicator" aria-hidden="true"></span></summary>
+<details id="beaches-section"><summary class="section-head"><div><h2>Beaches</h2><p>17 beaches · 187 gallery photos</p></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="section-tools"><button class="toggle" type="button" id="toggle-all" hidden>Expand all galleries</button></div>
 <div id="beach-list">
 <details class="beach">
@@ -300,6 +309,38 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Seal_Beach_pier_underbelly_(51030173257).jpg" aria-label="Seal Beach pier underbelly (51030173257)"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Seal_Beach_pier_underbelly_%2851030173257%29.jpg" alt=""></a>
 </div></div></details>
 <details class="beach">
+<summary><img class="cover" loading="lazy" src="images/crystal-cove/01.jpg" alt=""><div><span class="meta">Newport Coast · 10 photos</span><h3>Crystal Cove State Park</h3><span class="caption">Sandy coves and old beach cottages below the coastal bluffs.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="tip"><a href="https://www.google.com/maps/search/?api=1&amp;query=Crystal%20Cove%20State%20Park%20California" target="_blank" rel="noopener">Google Maps directions ↗</a></p>
+<dl class="visit-details"><div><dt>Parking</dt><dd>Park at Los Trancos for the Historic District, or at Pelican Point for the bluff trails.</dd></div><div><dt>Cost</dt><dd>$15 regular day use. A $20 special rate can apply on holidays or weekends. <a href="https://www.parks.ca.gov/644" target="_blank" rel="noopener">Rates ↗</a></dd></div><div><dt>Bike path</dt><dd>Ride the paved bluff-top path. Beach access from the bluffs can be steep.</dd></div></dl>
+<div class="gallery" tabindex="0" role="region" aria-label="Scrollable beach photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_beach.jpg" aria-label="Crystal Cove State Park photo 1"><img loading="lazy" src="images/crystal-cove/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystalcoveview.jpg" aria-label="Crystal Cove State Park photo 2"><img loading="lazy" src="images/crystal-cove/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_Park.jpg" aria-label="Crystal Cove State Park photo 3"><img loading="lazy" src="images/crystal-cove/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_Newport_Coast.jpg" aria-label="Crystal Cove State Park photo 4"><img loading="lazy" src="images/crystal-cove/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_State_Beach_-_01.jpg" aria-label="Crystal Cove State Park photo 5"><img loading="lazy" src="images/crystal-cove/05.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_State_Beach_9_4_2016_by_Don_Ramey_Logan.jpg" aria-label="Crystal Cove State Park photo 6"><img loading="lazy" src="images/crystal-cove/06.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:The_southern_Crystal_Cove_Historic_District_beach_cottage_number_35.jpg" aria-label="Crystal Cove State Park photo 7"><img loading="lazy" src="images/crystal-cove/07.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Pelican_Point_-_Crystal_Cove_-_California_-_01.jpg" aria-label="Crystal Cove State Park photo 8"><img loading="lazy" src="images/crystal-cove/08.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_State_Park_Trail.jpg" aria-label="Crystal Cove State Park photo 9"><img loading="lazy" src="images/crystal-cove/09.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Crystal_Cove_Beach_Sunset_%286886550148%29.jpg" aria-label="Crystal Cove State Park photo 10"><img loading="lazy" src="images/crystal-cove/10.jpg" alt=""></a>
+</div></div></details>
+<details class="beach">
+<summary><img class="cover" loading="lazy" src="images/bolsa-chica/01.jpg" alt=""><div><span class="meta">Huntington Beach · 10 photos</span><h3>Bolsa Chica State Beach</h3><span class="caption">A broad stretch of sand with lifeguard towers and a paved waterfront path.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="tip"><a href="https://www.google.com/maps/search/?api=1&amp;query=Bolsa%20Chica%20State%20Beach%20California" target="_blank" rel="noopener">Google Maps directions ↗</a></p>
+<dl class="visit-details"><div><dt>Parking</dt><dd>State beach lots off Pacific Coast Highway at 17851 Pacific Coast Highway.</dd></div><div><dt>Cost</dt><dd>$15 regular vehicle day use. <a href="https://www.parks.ca.gov/?page_id=642" target="_blank" rel="noopener">Rates ↗</a></dd></div><div><dt>Bike path</dt><dd>Follow the paved beachfront path south toward Huntington Beach Pier.</dd></div></dl>
+<div class="gallery" tabindex="0" role="region" aria-label="Scrollable beach photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Bolsa_Chica_State_Beach_Photo_Don_Ramey_Logan.jpg" aria-label="Bolsa Chica State Beach photo 1"><img loading="lazy" src="images/bolsa-chica/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Bolsa-from_23_south.JPG" aria-label="Bolsa Chica State Beach photo 2"><img loading="lazy" src="images/bolsa-chica/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:BolsaChica_JUL2009.jpg" aria-label="Bolsa Chica State Beach photo 3"><img loading="lazy" src="images/bolsa-chica/03.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:BolsaChicaJUL2009.JPG" aria-label="Bolsa Chica State Beach photo 4"><img loading="lazy" src="images/bolsa-chica/04.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Bolsa_Chica_State_Park.jpg" aria-label="Bolsa Chica State Beach photo 5"><img loading="lazy" src="images/bolsa-chica/05.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:BolsaChicaStand21.jpg" aria-label="Bolsa Chica State Beach photo 6"><img loading="lazy" src="images/bolsa-chica/06.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:BCLife-boat1.JPG" aria-label="Bolsa Chica State Beach photo 7"><img loading="lazy" src="images/bolsa-chica/07.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:B-Board.JPG" aria-label="Bolsa Chica State Beach photo 8"><img loading="lazy" src="images/bolsa-chica/08.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Bolsa_Chica_State_Beach_sunset.jpg" aria-label="Bolsa Chica State Beach photo 9"><img loading="lazy" src="images/bolsa-chica/09.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:BolsaChica-SunsetAUG08.jpg" aria-label="Bolsa Chica State Beach photo 10"><img loading="lazy" src="images/bolsa-chica/10.jpg" alt=""></a>
+</div></div></details>
+<details class="beach">
   <summary><img class="cover" loading="lazy" src="images/laguna/02.jpg" alt="">
     <div><span class="meta">Orange County · 11 photos</span><h3>Laguna Beach</h3><span class="caption">Rocky coves, palms and views from the bluffs.</span></div>
     <span class="indicator" aria-hidden="true"></span>
@@ -324,6 +365,14 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
   </div>
 </details></div>
 </details>
+<section id="things-to-do" aria-labelledby="activity-heading">
+<div class="section-head"><h2 id="activity-heading">Things to Do</h2></div>
+<div class="activity-grid"><article class="activity"><span class="meta">Santa Monica</span><h3>Pacific Park at Santa Monica Pier</h3><p>Ride the Ferris wheel or stop for ocean views from the pier. The pier is free and rides cost extra.</p><p class="activity-hours">Thanksgiving Day · Pacific Park 11 a.m.–9 p.m.</p><div class="activity-links"><a href="https://www.discoverlosangeles.com/things-to-do/thanksgiving-day-attractions-events-in-los-angeles" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Pacific%20Park%20at%20Santa%20Monica%20Pier%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
+<article class="activity"><span class="meta">Long Beach</span><h3>Aquarium of the Pacific</h3><p>An indoor stop near Rainbow Harbor. Aquarium admission is paid. The Thanksgiving buffet is a separate reservation.</p><p class="activity-hours">Thanksgiving Day · Aquarium 9 a.m.–5 p.m.</p><div class="activity-links"><a href="https://www.aquariumofpacific.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Aquarium%20of%20the%20Pacific%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
+<article class="activity"><span class="meta">Brentwood</span><h3>Getty Center</h3><p>Art, gardens and city views. Reserve free timed entry. Standard parking is $25.</p><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://www.getty.edu/visit/center/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Getty%20Center%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
+<article class="activity"><span class="meta">Downtown LA</span><h3>Grand Central Market</h3><p>An indoor food hall with multiple lunch options. The market lists regular hours of 8 a.m.–9 p.m.</p><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://grandcentralmarket.com/visit-the-market/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Grand%20Central%20Market%20California" target="_blank" rel="noopener">Maps ↗</a></div></article>
+<article class="activity"><span class="meta">Rancho Palos Verdes</span><h3>Point Vicente overlook</h3><p>Ocean and lighthouse views from the bluff park. Start at the Interpretive Center parking lot and choose a short out-and-back.</p><p class="activity-hours">Outdoor stop · Check museum hours separately</p><div class="activity-links"><a href="https://www.rpvca.gov/Facilities/Facility/Details/-13" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Point%20Vicente%20overlook%20California" target="_blank" rel="noopener">Maps ↗</a></div></article></div>
+</section>
 </main>
 <footer><div class="wrap">LA Thanksgiving Trip 2026</div></footer>
 <dialog aria-labelledby="viewer-title" id="viewer">
@@ -378,7 +427,11 @@ toggle.addEventListener('click', () => {
   cards.forEach(card => { card.open = open; });
   updateToggle();
 });
-if (location.hash === '#beaches') section.open = true;
+function openBeachSection() {
+  if (location.hash === '#beaches') section.open = true;
+}
+openBeachSection();
+window.addEventListener('hashchange', openBeachSection);
 document.querySelector('#previous').addEventListener('click', () => showPhoto(index - 1));
 document.querySelector('#next').addEventListener('click', () => showPhoto(index + 1));
 viewer.addEventListener('keydown', event => {
