@@ -2,123 +2,463 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>LA Thanksgiving Trip 2026</title>
   <style>
-    body {
-      font-family: -apple-system, system-ui, sans-serif;
-      max-width: 720px;
-      margin: 40px auto;
-      padding: 0 16px 48px;
-      color: #222;
-      line-height: 1.5;
+    :root {
+      --sand: #F4EFE6;
+      --sand-2: #E9E1D2;
+      --foam: #FFFCF7;
+      --ink: #1A2C33;
+      --muted: #5B6B72;
+      --ocean: #1E5C6E;
+      --ocean-deep: #163E4A;
     }
-    h1 { font-size: 1.75rem; margin: 0 0 24px; }
-    details {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px 16px 8px;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: var(--sand);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
     }
-    summary {
-      font-weight: 600;
-      font-size: 18px;
+    .wrap {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 28px 16px 80px;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      font-size: 0.72rem;
+      font-weight: 650;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ocean);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.85rem;
+      font-weight: 730;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+    }
+    .lede {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    details.beaches { border: 0; }
+    details.beaches > summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 64px;
+      margin: 12px 0 8px;
+      padding: 8px 2px 16px;
+      font-size: 1.45rem;
+      font-weight: 730;
+      letter-spacing: -0.03em;
       cursor: pointer;
-      margin-bottom: 8px;
+      user-select: none;
     }
-    article {
-      margin: 20px 0 28px;
-      padding-top: 8px;
-      border-top: 1px solid #eee;
+    details.beaches > summary::-webkit-details-marker { display: none; }
+    details.beaches > summary::after {
+      content: "";
+      width: 11px;
+      height: 11px;
+      border-right: 2.5px solid var(--ink);
+      border-bottom: 2.5px solid var(--ink);
+      transform: rotate(45deg);
+      transition: transform .22s ease;
+      margin-top: -8px;
+      flex: 0 0 auto;
     }
-    article:first-of-type { border-top: 0; padding-top: 0; }
-    h2 { font-size: 1.2rem; margin: 0 0 8px; }
-    figure { margin: 0 0 10px; }
-    img {
+    details.beaches[open] > summary::after {
+      transform: rotate(-135deg);
+      margin-top: 6px;
+    }
+
+    .card {
+      background: var(--foam);
+      border-radius: 24px;
+      box-shadow: 0 14px 36px rgba(26, 44, 51, 0.10), 0 2px 8px rgba(26, 44, 51, 0.04);
+      overflow: hidden;
+      margin: 0 0 28px;
+    }
+    .gallery {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      height: 70vw;
+      max-height: 460px;
+      min-height: 280px;
+      position: relative;
+    }
+    .gallery::-webkit-scrollbar { display: none; }
+    .slide {
+      position: relative;
+      flex: 0 0 calc(100% - 28px);
+      width: calc(100% - 28px);
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .slide:last-child {
+      flex-basis: 100%;
       width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
     }
-    p { margin: 0 0 12px; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+    .overlay {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 72px 20px 22px;
+      background: linear-gradient(180deg, rgba(8,16,20,0) 0%, rgba(8,16,20,0.72) 100%);
+      color: #fff;
+      pointer-events: none;
+    }
+    .overlay h2 {
+      margin: 0;
+      font-size: 1.7rem;
+      font-weight: 730;
+      letter-spacing: -0.03em;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.28);
+    }
+    .count {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(12, 20, 24, 0.48);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      padding: 5px 9px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px 18px;
+    }
+    .card-footer p {
+      margin: 0;
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
     a.maps {
-      display: inline-block;
-      padding: 8px 14px;
-      background: #1a73e8;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      background: var(--ocean);
       color: #fff;
       text-decoration: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
     }
+    a.maps:active { background: var(--ocean-deep); }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: #0B1216;
+    }
+    #lightbox.open { display: block; }
+    #lightbox .lb-track {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #lightbox .lb-track::-webkit-scrollbar { display: none; }
+    #lightbox .lb-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    #lightbox .lb-close,
+    #lightbox .lb-count {
+      position: fixed;
+      z-index: 90;
+      color: #fff;
+    }
+    #lightbox .lb-close {
+      top: max(14px, env(safe-area-inset-top));
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.14);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    #lightbox .lb-count {
+      top: max(22px, env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+    }
+    body.lb-open { overflow: hidden; }
   </style>
 </head>
 <body>
-  <h1>LA Thanksgiving Trip 2026</h1>
+  <div class="wrap">
+    <p class="eyebrow">California</p>
+    <h1>LA Thanksgiving Trip 2026</h1>
 
-  <details open>
-    <summary>Beaches</summary>
+    <details class="beaches" open>
+      <summary>Beaches</summary>
 
-    <article>
-      <h2>Santa Monica</h2>
-      <figure>
-        <img src="images/santa-monica.jpg" alt="Palm trees and Santa Monica State Beach, with the mountains in the distance" width="1200" height="900">
-      </figure>
-      <p>Palms line the path above a wide beach, with the Santa Monica Mountains in view.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Santa+Monica+State+Beach">Google Maps</a>
-    </article>
+      <article class="card" data-beach="santa-monica" data-count="7">
+        <div class="gallery" aria-label="Santa Monica photos">
+          <div class="count">1 / 7</div>
+          <div class="slide">
+            <img src="images/santa-monica/01.jpg" alt="Palm trees and Santa Monica State Beach, with the mountains in the distance" width="1200" height="900">
+            <div class="overlay"><h2>Santa Monica</h2></div>
+          </div>
+          <div class="slide"><img src="images/santa-monica/02.jpg" alt="Santa Monica Pier and Ferris wheel from the sand" width="1200" height="779" loading="lazy"></div>
+          <div class="slide"><img src="images/santa-monica/03.jpg" alt="People on Santa Monica State Beach on a clear day" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/santa-monica/04.jpg" alt="The pier seen from Santa Monica Beach" width="1200" height="797" loading="lazy"></div>
+          <div class="slide"><img src="images/santa-monica/05.jpg" alt="Waves along Santa Monica Beach with the pier in the distance" width="1200" height="802" loading="lazy"></div>
+          <div class="slide"><img src="images/santa-monica/06.jpg" alt="Sunset over Santa Monica Beach and a lifeguard tower" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/santa-monica/07.jpg" alt="The path out toward the water at Santa Monica State Beach" width="1200" height="800" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>Palms line the path above a wide beach, with the mountains in view.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Santa+Monica+State+Beach">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Venice Beach</h2>
-      <figure>
-        <img src="images/venice-beach.jpg" alt="Waves, sand, and a row of palm trees at Venice Beach" width="1200" height="798">
-      </figure>
-      <p>A wide sandy beach with a row of palms behind the sand and the ocean in front.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Venice+Beach+Los+Angeles">Google Maps</a>
-    </article>
+      <article class="card" data-beach="venice" data-count="7">
+        <div class="gallery" aria-label="Venice Beach photos">
+          <div class="count">1 / 7</div>
+          <div class="slide">
+            <img src="images/venice/01.jpg" alt="Waves, sand, and a row of palm trees at Venice Beach" width="1200" height="798">
+            <div class="overlay"><h2>Venice Beach</h2></div>
+          </div>
+          <div class="slide"><img src="images/venice/02.jpg" alt="Wide sand and a lifeguard tower at Venice Beach" width="1200" height="892" loading="lazy"></div>
+          <div class="slide"><img src="images/venice/03.jpg" alt="Waves at Venice Beach with the city in the distance" width="1200" height="798" loading="lazy"></div>
+          <div class="slide"><img src="images/venice/04.jpg" alt="The Venice Beach boardwalk lined with palms" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/venice/05.jpg" alt="Sunset over the sand at Venice Beach" width="1200" height="799" loading="lazy"></div>
+          <div class="slide"><img src="images/venice/06.jpg" alt="Palm trees at sunset at Venice Beach" width="1200" height="798" loading="lazy"></div>
+          <div class="slide"><img src="images/venice/07.jpg" alt="The skate park at Venice Beach at sunset" width="1200" height="800" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>A wide sandy beach with a row of palms along the boardwalk.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Venice+Beach+Los+Angeles">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Long Beach</h2>
-      <figure>
-        <img src="images/long-beach.jpg" alt="Two palm trees on the sand at sunset in Long Beach" width="1200" height="900">
-      </figure>
-      <p>Palms stand on the sand at sunset, with the harbor and shoreline in view.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Long+Beach+City+Beach">Google Maps</a>
-    </article>
+      <article class="card" data-beach="long-beach" data-count="5">
+        <div class="gallery" aria-label="Long Beach photos">
+          <div class="count">1 / 5</div>
+          <div class="slide">
+            <img src="images/long-beach/01.jpg" alt="Two palm trees on the sand at sunset in Long Beach" width="1200" height="900">
+            <div class="overlay"><h2>Long Beach</h2></div>
+          </div>
+          <div class="slide"><img src="images/long-beach/02.jpg" alt="A lifeguard tower on the sand at Long Beach" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/long-beach/03.jpg" alt="Kites on the sand at Belmont Shore in Long Beach" width="800" height="600" loading="lazy"></div>
+          <div class="slide"><img src="images/long-beach/04.jpg" alt="Birds over the beach and shoreline in Long Beach" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/long-beach/05.jpg" alt="Rainbow Harbor and the Long Beach skyline" width="1200" height="800" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>Palms stand on the sand, with the harbor and shoreline in view.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Long+Beach+City+Beach">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Huntington Beach</h2>
-      <figure>
-        <img src="images/huntington-beach.jpg" alt="Palm trees, the pier, and a wide sandy beach at Huntington Beach" width="1200" height="676">
-      </figure>
-      <p>Palms stand near the pier and a wide sandy beach.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Huntington+Beach+Pier">Google Maps</a>
-    </article>
+      <article class="card" data-beach="huntington" data-count="7">
+        <div class="gallery" aria-label="Huntington Beach photos">
+          <div class="count">1 / 7</div>
+          <div class="slide">
+            <img src="images/huntington/01.jpg" alt="Palm trees, the pier, and a wide sandy beach at Huntington Beach" width="1200" height="676">
+            <div class="overlay"><h2>Huntington Beach</h2></div>
+          </div>
+          <div class="slide"><img src="images/huntington/02.jpg" alt="Huntington Beach Pier on a sunny day" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/huntington/03.jpg" alt="Aerial view of Huntington Beach Pier in the surf" width="1200" height="674" loading="lazy"></div>
+          <div class="slide"><img src="images/huntington/04.jpg" alt="Huntington Beach Pier at dusk" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/huntington/05.jpg" alt="Swimmers near Huntington Beach Pier" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/huntington/06.jpg" alt="Huntington Beach Pier against a clear blue sky" width="1067" height="1600" loading="lazy"></div>
+          <div class="slide"><img src="images/huntington/07.jpg" alt="A crowded day on the sand at Huntington Beach" width="1200" height="800" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>Palms stand near the pier and a wide sandy beach.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Huntington+Beach+Pier">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Newport Beach</h2>
-      <figure>
-        <img src="images/newport-beach.jpg" alt="Palm trees standing on the sand at Newport Beach, seen from the water" width="1200" height="900">
-      </figure>
-      <p>Palms stand on the sand at the edge of the water.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Newport+Beach">Google Maps</a>
-    </article>
+      <article class="card" data-beach="newport" data-count="7">
+        <div class="gallery" aria-label="Newport Beach photos">
+          <div class="count">1 / 7</div>
+          <div class="slide">
+            <img src="images/newport/01.jpg" alt="Palm trees along the path at Newport Beach at sunset" width="1200" height="802">
+            <div class="overlay"><h2>Newport Beach</h2></div>
+          </div>
+          <div class="slide"><img src="images/newport/02.jpg" alt="Aerial view of Newport Beach Pier and the peninsula" width="1200" height="900" loading="lazy"></div>
+          <div class="slide"><img src="images/newport/03.jpg" alt="Newport Beach Pier reflected in the wet sand at dusk" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/newport/04.jpg" alt="Newport Beach Pier at sunset" width="1200" height="899" loading="lazy"></div>
+          <div class="slide"><img src="images/newport/05.jpg" alt="People on the sand at Newport Beach" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/newport/06.jpg" alt="The jetty and clear water at Newport Beach" width="1200" height="803" loading="lazy"></div>
+          <div class="slide"><img src="images/newport/07.jpg" alt="A boardwalk over the harbor in Newport Beach" width="1200" height="960" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>Palms line the oceanfront path along a long stretch of sand.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Newport+Beach">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Corona del Mar</h2>
-      <figure>
-        <img src="images/corona-del-mar.jpg" alt="Lookout Point at Corona del Mar, with palms along the path and a small cove" width="1200" height="676">
-      </figure>
-      <p>A small cove sits below the bluff at Lookout Point, with palms along the path.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Corona+del+Mar+State+Beach">Google Maps</a>
-    </article>
+      <article class="card" data-beach="corona-del-mar" data-count="6">
+        <div class="gallery" aria-label="Corona del Mar photos">
+          <div class="count">1 / 6</div>
+          <div class="slide">
+            <img src="images/corona-del-mar/01.jpg" alt="The cove at Corona del Mar State Beach on a busy summer day" width="900" height="1600">
+            <div class="overlay"><h2>Corona del Mar</h2></div>
+          </div>
+          <div class="slide"><img src="images/corona-del-mar/02.jpg" alt="Lookout Point at Corona del Mar, with palms along the path and a small cove" width="1200" height="676" loading="lazy"></div>
+          <div class="slide"><img src="images/corona-del-mar/03.jpg" alt="Cliffs and waves at Corona del Mar State Beach" width="900" height="1600" loading="lazy"></div>
+          <div class="slide"><img src="images/corona-del-mar/04.jpg" alt="Rocky shore at Little Corona Beach" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/corona-del-mar/05.jpg" alt="Sunrise on the rocks at Little Corona Beach" width="1200" height="801" loading="lazy"></div>
+          <div class="slide"><img src="images/corona-del-mar/06.jpg" alt="A rocky inlet at Corona del Mar" width="1200" height="1600" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>A small cove sits below the bluff, with palms along the path.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Corona+del+Mar+State+Beach">Maps</a>
+        </div>
+      </article>
 
-    <article>
-      <h2>Laguna Beach</h2>
-      <figure>
-        <img src="images/laguna-beach.jpg" alt="Palm trees on a headland above turquoise water at Laguna Beach" width="1200" height="1600">
-      </figure>
-      <p>Palms stand on a headland above turquoise water.</p>
-      <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Main+Beach+Laguna+Beach">Google Maps</a>
-    </article>
-  </details>
+      <article class="card" data-beach="laguna" data-count="7">
+        <div class="gallery" aria-label="Laguna Beach photos">
+          <div class="count">1 / 7</div>
+          <div class="slide">
+            <img src="images/laguna/01.jpg" alt="Aerial view of the coves and shoreline at Laguna Beach" width="1200" height="899">
+            <div class="overlay"><h2>Laguna Beach</h2></div>
+          </div>
+          <div class="slide"><img src="images/laguna/02.jpg" alt="Main Beach in Laguna Beach, with the cove and hillside homes" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/laguna/03.jpg" alt="Palm trees on a headland above turquoise water at Laguna Beach" width="1200" height="1600" loading="lazy"></div>
+          <div class="slide"><img src="images/laguna/04.jpg" alt="Victoria Beach and the tower in Laguna Beach" width="1200" height="1500" loading="lazy"></div>
+          <div class="slide"><img src="images/laguna/05.jpg" alt="Rocky coastline at Laguna Beach from above" width="1200" height="899" loading="lazy"></div>
+          <div class="slide"><img src="images/laguna/06.jpg" alt="Waves breaking on the rocks at Laguna Beach" width="1200" height="800" loading="lazy"></div>
+          <div class="slide"><img src="images/laguna/07.jpg" alt="A breaking wave at Laguna Beach" width="1200" height="675" loading="lazy"></div>
+        </div>
+        <div class="card-footer">
+          <p>Coves and a rocky shoreline, with palms on the headlands.</p>
+          <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Main+Beach+Laguna+Beach">Maps</a>
+        </div>
+      </article>
+    </details>
+  </div>
+
+  <div id="lightbox" hidden>
+    <button class="lb-close" type="button" aria-label="Close">×</button>
+    <div class="lb-count"></div>
+    <div class="lb-track"></div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("lightbox");
+      const track = lightbox.querySelector(".lb-track");
+      const lbCount = lightbox.querySelector(".lb-count");
+      const closeBtn = lightbox.querySelector(".lb-close");
+
+      document.querySelectorAll(".card").forEach(function (card) {
+        const gallery = card.querySelector(".gallery");
+        const slides = gallery.querySelectorAll(".slide");
+        const countEl = gallery.querySelector(".count");
+        const total = slides.length;
+
+        gallery.addEventListener("scroll", function () {
+          const i = Math.round(gallery.scrollLeft / slides[0].offsetWidth) + 1;
+          countEl.textContent = Math.min(Math.max(i, 1), total) + " / " + total;
+        }, { passive: true });
+
+        slides.forEach(function (slide, index) {
+          slide.addEventListener("click", function () {
+            openLightbox(card, index);
+          });
+        });
+      });
+
+      function openLightbox(card, startIndex) {
+        const imgs = card.querySelectorAll(".slide img");
+        track.innerHTML = "";
+        imgs.forEach(function (img) {
+          const slide = document.createElement("div");
+          slide.className = "lb-slide";
+          const copy = document.createElement("img");
+          copy.src = img.currentSrc || img.src;
+          copy.alt = img.alt;
+          slide.appendChild(copy);
+          track.appendChild(slide);
+        });
+        lightbox.hidden = false;
+        lightbox.classList.add("open");
+        document.body.classList.add("lb-open");
+        const update = function () {
+          const w = track.clientWidth || 1;
+          const i = Math.round(track.scrollLeft / w) + 1;
+          lbCount.textContent = Math.min(Math.max(i, 1), imgs.length) + " / " + imgs.length;
+        };
+        track.onscroll = update;
+        requestAnimationFrame(function () {
+          track.scrollLeft = startIndex * track.clientWidth;
+          update();
+        });
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.hidden = true;
+        document.body.classList.remove("lb-open");
+        track.innerHTML = "";
+      }
+
+      closeBtn.addEventListener("click", closeLightbox);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+      });
+    })();
+  </script>
 </body>
 </html>
