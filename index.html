@@ -52,10 +52,6 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 #shortlist h2{font-size:clamp(1.8rem,5vw,2.7rem)}
 #shortlist:not([hidden])~main{display:none}
 .shortlist-items{list-style:none;padding:0;margin:12px 0}
-.shortlist-item{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:8px 0}
-.shortlist-item img{width:64px;height:48px;object-fit:cover;border-radius:6px}
-.shortlist-item small{display:block;color:var(--muted)}
-.shortlist-item a{font-size:.85rem}
 #sync-status{margin:4px 0;font-size:.8rem}
 </style>
 
@@ -87,7 +83,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 </section>
 <section id="shortlist" class="wrap" aria-labelledby="shortlist-title" hidden>
   <h2 id="shortlist-title" tabindex="-1">Shortlist</h2>
-  <p id="shortlist-empty">Save stops using the Shortlist button.</p>
+  <p id="shortlist-empty">Tap a star on any stop to save it here.</p>
   <ul id="shortlist-items" class="shortlist-items"></ul>
 </section>
 <main id="beaches" class="wrap">
@@ -1365,6 +1361,7 @@ let syncing = false;
 const minimizedCards = new Set();
 const shortlistedCards = new Set();
 const shortlistControls = new Map();
+const shortlistRows = new Map();
 const shortlistPage = document.querySelector('#shortlist');
 const shortlistItems = document.querySelector('#shortlist-items');
 const shortlistLink = document.querySelector('#shortlist-link');
@@ -1395,29 +1392,34 @@ function renderShortlist() {
     button.setAttribute('aria-pressed', String(saved));
     button.setAttribute('aria-label', (saved ? 'Remove from shortlist: ' : 'Shortlist: ') + title);
     button.textContent = saved ? '★' : '☆';
-    if (!saved) continue;
-    const row = document.createElement('li');
-    row.className = 'shortlist-item';
-    const image = card.querySelector('summary .cover').cloneNode(false);
-    const info = document.createElement('div');
-    const name = document.createElement('strong');
-    name.textContent = title;
-    const costs = document.createElement('small');
-    costs.textContent = [...card.querySelectorAll('summary .admission-price, summary .parking-price')]
-      .map(badge => badge.textContent.trim()).join(' · ');
-    const directions = card.querySelector('a[href^="https://www.google.com/maps/"]').cloneNode(false);
-    directions.textContent = 'Directions ↗';
-    info.append(name, costs, directions);
-    const remove = document.createElement('button');
-    remove.type = 'button';
-    remove.className = 'card-visibility';
-    remove.textContent = 'Remove';
-    remove.setAttribute('aria-label', 'Remove ' + title + ' from shortlist');
-    remove.addEventListener('click', () => {
-      changeShortlist(key, false);
-      (shortlistItems.querySelector('button') || document.querySelector('#shortlist-title')).focus();
-    });
-    row.append(image, info, remove);
+    if (!saved) {
+      shortlistRows.delete(key);
+      continue;
+    }
+    let row = shortlistRows.get(key);
+    if (!row) {
+      row = document.createElement('li');
+      const details = card.cloneNode(true);
+      details.removeAttribute('data-point');
+      details.classList.remove('is-minimized');
+      details.hidden = false;
+      details.open = false;
+      const actions = details.querySelector('.card-actions');
+      const remove = actions.querySelector('.shortlist-button');
+      actions.querySelector('.card-visibility:not(.shortlist-button)').remove();
+      remove.textContent = '★';
+      remove.setAttribute('aria-pressed', 'true');
+      remove.setAttribute('aria-label', 'Remove ' + title + ' from shortlist');
+      remove.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        changeShortlist(key, false);
+        (shortlistItems.querySelector('button') || document.querySelector('#shortlist-title')).focus();
+      });
+      bindPhotoGallery(details);
+      row.append(details);
+      shortlistRows.set(key, row);
+    }
     rows.push(row);
   }
   shortlistItems.replaceChildren(...rows);
@@ -1593,7 +1595,7 @@ function showPhoto(position) {
     photo.closest('.beach').querySelector('h3').textContent + ' · ' + (index + 1) + ' / ' + photos.length;
 }
 
-[...beachCards, ...activityCards].forEach(card => {
+function bindPhotoGallery(card) {
   const gallery = [...card.querySelectorAll('.photo')];
   gallery.forEach((photo, position) => photo.addEventListener('click', event => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || !viewer.showModal) return;
@@ -1602,7 +1604,8 @@ function showPhoto(position) {
     showPhoto(position);
     viewer.showModal();
   }));
-});
+}
+[...beachCards, ...activityCards].forEach(bindPhotoGallery);
 beachCards.forEach(card => bindCardVisibility(card, 'beach'));
 activityCards.forEach(card => bindCardVisibility(card, 'activity'));
 renderShortlist();
