@@ -24,6 +24,16 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .activity p.activity-hours{color:var(--ink);font-weight:700}
 .activity-links{display:flex;gap:16px;margin:10px 0 14px;font-size:.85rem;font-weight:650}
 .activity-category{margin:22px 0 28px}.activity-category>h3{font-size:1.35rem;margin:0 0 10px;font-family:inherit;letter-spacing:0;font-weight:700}
+
+.card-actions{display:flex;align-items:center;gap:10px}
+.card-visibility{border:1px solid #b7bdb2;background:#fffdf7;border-radius:20px;padding:4px 10px;font-size:.78rem;font-weight:650;cursor:pointer}
+.card-visibility:hover{background:#e9ecdf}
+.card-visibility:focus-visible{outline-offset:2px}
+.beach.is-minimized{margin-block:5px;border-radius:10px;background:#f3f1e7}
+.beach.is-minimized>summary{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:5px 10px;cursor:default}
+.beach.is-minimized>summary>.cover,.beach.is-minimized .meta,.beach.is-minimized .caption,.beach.is-minimized .indicator,.beach.is-minimized>.inside{display:none}
+.beach.is-minimized h3{margin:0;color:var(--muted);font:650 .85rem/1.3 system-ui,sans-serif;letter-spacing:0}
+@media(max-width:650px){.card-actions{flex-direction:column;gap:4px}.card-visibility{padding:3px 7px}}
 </style>
 
 </head>
@@ -893,15 +903,75 @@ const viewerImage = document.querySelector('#viewer-image');
 let photos = [];
 let index = 0;
 
-function bindGalleryToggle(button, cards) {
-  function updateLabel() {
-    button.textContent = cards.every(card => card.open) ? 'Collapse all galleries' : 'Expand all galleries';
+const visibilityStorageKey = 'la-thanksgiving-2026-minimized-cards';
+const minimizedCards = new Set();
+try {
+  const saved = JSON.parse(localStorage.getItem(visibilityStorageKey) || '[]');
+  if (Array.isArray(saved)) {
+    saved.filter(value => typeof value === 'string').forEach(value => minimizedCards.add(value));
   }
-  cards.forEach(card => card.addEventListener('toggle', updateLabel));
+} catch {
+  // The controls still work for this visit when storage is unavailable.
+}
+
+function bindCardVisibility(card, group) {
+  const summary = card.querySelector('summary');
+  const title = summary.querySelector('h3').textContent.trim();
+  const key = group + ':' + title;
+  const actions = document.createElement('span');
+  actions.className = 'card-actions';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'card-visibility';
+  actions.append(button, summary.querySelector('.indicator'));
+  summary.append(actions);
+
+  function showState() {
+    const minimized = minimizedCards.has(key);
+    card.classList.toggle('is-minimized', minimized);
+    if (minimized) card.open = false;
+    const action = minimized ? 'Restore' : 'Hide';
+    button.textContent = action;
+    button.setAttribute('aria-label', action + ' ' + title);
+  }
+  showState();
+  summary.addEventListener('click', event => {
+    if (minimizedCards.has(key)) event.preventDefault();
+  });
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (minimizedCards.has(key)) minimizedCards.delete(key);
+    else minimizedCards.add(key);
+    showState();
+    try {
+      localStorage.setItem(visibilityStorageKey, JSON.stringify([...minimizedCards]));
+    } catch {
+      // Keep the in-memory choice for this visit.
+    }
+    card.dispatchEvent(new Event('visibilitychange'));
+  });
+}
+
+function bindGalleryToggle(button, cards) {
+  function visibleCards() {
+    return cards.filter(card => !card.classList.contains('is-minimized'));
+  }
+  function updateLabel() {
+    const visible = visibleCards();
+    button.disabled = visible.length === 0;
+    button.textContent = visible.length && visible.every(card => card.open) ? 'Collapse all galleries' : 'Expand all galleries';
+  }
+  cards.forEach(card => {
+    card.addEventListener('toggle', updateLabel);
+    card.addEventListener('visibilitychange', updateLabel);
+  });
   button.hidden = false;
+  updateLabel();
   button.addEventListener('click', () => {
-    const open = cards.some(card => !card.open);
-    cards.forEach(card => { card.open = open; });
+    const visible = visibleCards();
+    const open = visible.some(card => !card.open);
+    visible.forEach(card => { card.open = open; });
     updateLabel();
   });
 }
@@ -932,6 +1002,8 @@ function showPhoto(position) {
     viewer.showModal();
   }));
 });
+beachCards.forEach(card => bindCardVisibility(card, 'beach'));
+activityCards.forEach(card => bindCardVisibility(card, 'activity'));
 bindGalleryToggle(document.querySelector('#toggle-all'), beachCards);
 bindGalleryToggle(document.querySelector('#toggle-activities'), activityCards);
 function openBeachSection() {
