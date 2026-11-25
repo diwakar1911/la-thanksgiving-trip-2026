@@ -23,7 +23,10 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 #things-to-do .section-head{cursor:default}
 .activity p.activity-hours{color:var(--ink);font-weight:700}
 .activity-links{display:flex;gap:16px;margin:10px 0 14px;font-size:.85rem;font-weight:650}
-.activity-category{margin:22px 0 28px}.activity-category>h3{font-size:1.35rem;margin:0 0 10px;font-family:inherit;letter-spacing:0;font-weight:700}
+.activity-category{margin:22px 0 28px}.category-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;list-style:none}
+.category-summary::-webkit-details-marker{display:none}
+.category-summary h3{font-size:1.35rem;margin:0;font-family:inherit;letter-spacing:0;font-weight:700}
+.activity-category[open]>.category-summary .indicator::before{content:'−'}
 
 .card-actions{display:flex;align-items:center;gap:10px}
 .card-visibility{border:1px solid #b7bdb2;background:#fffdf7;border-radius:20px;padding:4px 10px;font-size:.78rem;font-weight:650;cursor:pointer}
@@ -409,7 +412,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 </details>
 <section id="things-to-do" aria-labelledby="activity-heading">
 <div class="section-head"><h2 id="activity-heading">Things to Do</h2><button class="toggle" id="toggle-activities" hidden>Expand all galleries</button></div>
-<section class="activity-category" aria-labelledby="theme-parks-heading"><h3 id="theme-parks-heading">Theme parks &amp; studio tours</h3>
+<details class="activity-category" aria-labelledby="theme-parks-heading" open><summary class="category-summary"><h3 id="theme-parks-heading">Theme parks &amp; studio tours</h3><span class="indicator" aria-hidden="true"></span></summary>
 <details class="beach activity">
 <summary><img class="cover" loading="lazy" src="images/activities/universal-studios-hollywood/01.jpg" alt=""><div><span class="meta">Universal City · 4 photos</span><h3>Universal Studios Hollywood</h3><span class="caption">A full-day park for the Studio Tour, Super Nintendo World and movie-themed rides. CityWalk is next to the entrance.</span></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="inside"><p class="activity-hours">Paid park ticket · Open Thanksgiving Day · Check date-specific hours</p><div class="activity-links"><a href="https://www.universalstudioshollywood.com/web/en/us/calendar-and-hours" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Universal%20Studios%20Hollywood%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
@@ -446,8 +449,8 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Knott%27s_Calico_Railway.jpg" aria-label="Knott’s Berry Farm photo 3"><img loading="lazy" src="images/activities/knott-s-berry-farm/03.jpg" alt=""></a>
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Knott%27s_Chicken_Dinner_Restaurant.jpg" aria-label="Knott’s Berry Farm photo 4"><img loading="lazy" src="images/activities/knott-s-berry-farm/04.jpg" alt=""></a>
 </div></div></details>
-</section>
-<section class="activity-category" aria-labelledby="outdoors-heading"><h3 id="outdoors-heading">Outdoors &amp; views</h3>
+</details>
+<details class="activity-category" aria-labelledby="outdoors-heading" open><summary class="category-summary"><h3 id="outdoors-heading">Outdoors &amp; views</h3><span class="indicator" aria-hidden="true"></span></summary>
 <details class="beach activity">
 <summary><img class="cover" loading="lazy" src="images/activities/pacific-park/01.jpg" alt=""><div><span class="meta">Santa Monica · 5 photos</span><h3>Pacific Park at Santa Monica Pier</h3><span class="caption">Ride the Ferris wheel or stop for ocean views from the pier. The pier is free and rides cost extra.</span></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="inside"><p class="activity-hours">Thanksgiving Day · Pacific Park 11 a.m.–9 p.m.</p><div class="activity-links"><a href="https://www.discoverlosangeles.com/things-to-do/thanksgiving-day-attractions-events-in-los-angeles" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Pacific%20Park%20at%20Santa%20Monica%20Pier%20California" target="_blank" rel="noopener">Maps ↗</a></div>
@@ -611,8 +614,8 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:From_Mulholland_overlooking_King_Gillette_Ranch_%2844276454050%29.jpg" aria-label="King Gillette Ranch Visitor Center photo 3"><img loading="lazy" src="images/activities/king-gillette-ranch-visitor-center/03.jpg" alt=""></a>
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:King_Gillette_Ranch_Meadow_%283626915574%29.jpg" aria-label="King Gillette Ranch Visitor Center photo 4"><img loading="lazy" src="images/activities/king-gillette-ranch-visitor-center/04.jpg" alt=""></a>
 </div></div></details>
-</section>
-<section class="activity-category" aria-labelledby="museums-heading"><h3 id="museums-heading">Museums &amp; aquarium</h3>
+</details>
+<details class="activity-category" aria-labelledby="museums-heading" open><summary class="category-summary"><h3 id="museums-heading">Museums &amp; aquarium</h3><span class="indicator" aria-hidden="true"></span></summary>
 <details class="beach activity">
 <summary><img class="cover" loading="lazy" src="images/activities/aquarium/01.jpg" alt=""><div><span class="meta">Long Beach · 5 photos</span><h3>Aquarium of the Pacific</h3><span class="caption">An indoor stop near Rainbow Harbor. Aquarium admission is paid. The Thanksgiving buffet is a separate reservation.</span></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="inside"><p class="activity-hours">Thanksgiving Day · Aquarium 9 a.m.–5 p.m.</p><div class="activity-links"><a href="https://www.aquariumofpacific.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Aquarium%20of%20the%20Pacific%20California" target="_blank" rel="noopener">Maps ↗</a></div>
@@ -766,8 +769,8 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Sea_stars_and_sea_urchins_in_the_tide_pool_touch_tank_at_the_Cabrillo_Marine_Aquarium.JPG" aria-label="Cabrillo Marine Aquarium photo 3"><img loading="lazy" src="images/activities/cabrillo-marine-aquarium/03.jpg" alt=""></a>
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Red_abalone_in_tank_at_Cabrillo_Marine_Aquarium%2C_San_Pedro%2C_California.jpg" aria-label="Cabrillo Marine Aquarium photo 4"><img loading="lazy" src="images/activities/cabrillo-marine-aquarium/04.jpg" alt=""></a>
 </div></div></details>
-</section>
-<section class="activity-category" aria-labelledby="food-heading"><h3 id="food-heading">Food &amp; markets</h3>
+</details>
+<details class="activity-category" aria-labelledby="food-heading" open><summary class="category-summary"><h3 id="food-heading">Food &amp; markets</h3><span class="indicator" aria-hidden="true"></span></summary>
 <details class="beach activity">
 <summary><img class="cover" loading="lazy" src="images/activities/grand-central-market/01.jpg" alt=""><div><span class="meta">Downtown LA · 5 photos</span><h3>Grand Central Market</h3><span class="caption">An indoor food hall with multiple lunch options. The market lists regular hours of 8 a.m.–9 p.m.</span></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="inside"><p class="activity-hours">Closed Thanksgiving Day</p><div class="activity-links"><a href="https://grandcentralmarket.com/visit-the-market/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Grand%20Central%20Market%20California" target="_blank" rel="noopener">Maps ↗</a></div>
@@ -822,8 +825,8 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Long_Beach_04.jpg" aria-label="Shoreline Village photo 3"><img loading="lazy" src="images/activities/shoreline-village/03.jpg" alt=""></a>
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Waterfront%2C_Long_Beach%2C_CA%2C_USA_-_panoramio_%28125%29.jpg" aria-label="Shoreline Village photo 4"><img loading="lazy" src="images/activities/shoreline-village/04.jpg" alt=""></a>
 </div></div></details>
-</section>
-<section class="activity-category" aria-labelledby="landmarks-heading"><h3 id="landmarks-heading">Landmarks &amp; architecture</h3>
+</details>
+<details class="activity-category" aria-labelledby="landmarks-heading" open><summary class="category-summary"><h3 id="landmarks-heading">Landmarks &amp; architecture</h3><span class="indicator" aria-hidden="true"></span></summary>
 <details class="beach activity">
 <summary><img class="cover" loading="lazy" src="images/activities/angels-flight-railway/01.jpg" alt=""><div><span class="meta">Bunker Hill · 4 photos</span><h3>Angels Flight Railway</h3><span class="caption">A short funicular ride from Hill Street, across from Grand Central Market, to California Plaza.</span></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="inside"><p class="activity-hours">Paid ride · Check holiday service</p><div class="activity-links"><a href="https://www.angelsflight.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Angels%20Flight%20Railway%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
@@ -921,7 +924,89 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:Books_Invite_All_They_Constrain_None_%28112146967%29.jpeg" aria-label="Los Angeles Central Library photo 3"><img loading="lazy" src="images/activities/los-angeles-central-library/03.jpg" alt=""></a>
 <a class="photo" href="https://commons.wikimedia.org/wiki/File:BookEnds_Cafe_%28Los_Angeles_Central_Library%29.jpg" aria-label="Los Angeles Central Library photo 4"><img loading="lazy" src="images/activities/los-angeles-central-library/04.jpg" alt=""></a>
 </div></div></details>
-</section>
+</details>
+<details class="activity-category" aria-labelledby="areas-heading" open><summary class="category-summary"><h3 id="areas-heading">Areas to Explore</h3><span class="indicator" aria-hidden="true"></span></summary>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/arts-district/01.jpg" alt=""><div><span class="meta">Downtown LA · 3 photos</span><h3>Arts District</h3><span class="caption">Start at Hauser & Wirth on East 3rd Street, then explore the nearby murals, cafés, and converted warehouses. You can keep this to a block or two.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at 901 E 3rd St · Street and paid lot parking</p><div class="activity-links"><a href="https://www.hauserwirth.com/locations/10005-los-angeles/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Arts%20District%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Arts District photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Art_District_in_Los_Angeles.jpg" aria-label="Arts District photo 1"><img loading="lazy" src="images/activities/arts-district/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Art_District_in_Los_Angeles_2.jpg" aria-label="Arts District photo 2"><img loading="lazy" src="images/activities/arts-district/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Life_In_The_Arts_District_%28Los_Angeles%29.jpg" aria-label="Arts District photo 3"><img loading="lazy" src="images/activities/arts-district/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/chinatown/01.jpg" alt=""><div><span class="meta">Downtown LA · 3 photos</span><h3>Chinatown</h3><span class="caption">Start at Central Plaza for lanterns and storefronts, then cross Hill Street for Chung King Road. The two plazas make a compact visit.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at 943 N Broadway · Check individual holiday hours</p><div class="activity-links"><a href="https://tourism.lacity.gov/neighborhood-gems/cultural-neighborhoods" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Chinatown%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Chinatown photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:China_Town_main_plaza.JPG" aria-label="Chinatown photo 1"><img loading="lazy" src="images/activities/chinatown/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Chung_King_Road_in_LA%27s_New_Chinatown_as_the_sun_sets.jpg" aria-label="Chinatown photo 2"><img loading="lazy" src="images/activities/chinatown/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Chinatown_in_Los_Angeles_3.jpg" aria-label="Chinatown photo 3"><img loading="lazy" src="images/activities/chinatown/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/koreatown/01.jpg" alt=""><div><span class="meta">Central LA · 3 photos</span><h3>Koreatown</h3><span class="caption">Use Chapman Plaza or the Wilshire and Western area as a base for Korean barbecue, bakeries, and shops. Pick one cluster since the neighborhood spans many blocks.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start near 6th Street and Alexandria Avenue · Check lot validation</p><div class="activity-links"><a href="https://tourism.lacity.gov/neighborhood-gems/cultural-neighborhoods" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Koreatown%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Koreatown photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Wilshire_Blvd_in_Koreatown.jpg" aria-label="Koreatown photo 1"><img loading="lazy" src="images/activities/koreatown/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:6th_and_Kenmore%2C_night%2C_Koreatown%2C_Los_Angeles.jpg" aria-label="Koreatown photo 2"><img loading="lazy" src="images/activities/koreatown/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:3rd_St_between_Harvard_and_Serrano%2C_LA.jpg" aria-label="Koreatown photo 3"><img loading="lazy" src="images/activities/koreatown/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/silver-lake/01.jpg" alt=""><div><span class="meta">Eastside LA · 3 photos</span><h3>Silver Lake</h3><span class="caption">Choose the Sunset Junction café stretch or the reservoir and meadow for a quieter outing. They’re separate stops, so park near the one you’re visiting.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at Sunset Boulevard and Santa Monica Boulevard or Silver Lake Meadow</p><div class="activity-links"><a href="https://www.laparks.org/park/silver-lake-meadow" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Silver%20Lake%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Silver Lake photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Sunsetjunction.jpg" aria-label="Silver Lake photo 1"><img loading="lazy" src="images/activities/silver-lake/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Silver_Lake_Reservoir.jpg" aria-label="Silver Lake photo 2"><img loading="lazy" src="images/activities/silver-lake/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Silverlake%2C_Los_Angeles.jpg" aria-label="Silver Lake photo 3"><img loading="lazy" src="images/activities/silver-lake/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/los-feliz/01.jpg" alt=""><div><span class="meta">Eastside LA · 3 photos</span><h3>Los Feliz</h3><span class="caption">Browse the shops, cafés, and theaters on Vermont Avenue, or use the neighborhood as a lunch stop on the way to Griffith Park.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at Vermont Avenue and Franklin Avenue · Check posted street parking</p><div class="activity-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Vermont+Avenue+and+Franklin+Avenue+Los+Feliz" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Los%20Feliz%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Los Feliz photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Los_feliz_blvd.jpg" aria-label="Los Feliz photo 1"><img loading="lazy" src="images/activities/los-feliz/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Los_Feliz%2C_Los_Angeles%2C_CA%2C_USA_-_panoramio_%281%29.jpg" aria-label="Los Feliz photo 2"><img loading="lazy" src="images/activities/los-feliz/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Los_Feliz%2C_Los_Angeles%2C_CA%2C_USA_-_panoramio_%284%29.jpg" aria-label="Los Feliz photo 3"><img loading="lazy" src="images/activities/los-feliz/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/highland-park/01.jpg" alt=""><div><span class="meta">Northeast LA · 3 photos</span><h3>Highland Park</h3><span class="caption">Try Figueroa Street for a compact restaurant and shop stretch, or drive over to York Boulevard for another cluster of cafés and storefronts.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at Figueroa Street and Avenue 56 · Metro A Line nearby</p><div class="activity-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Highland+Park+Station+Los+Angeles" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Highland%20Park%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Highland Park photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:HighlandParkSignage.jpg" aria-label="Highland Park photo 1"><img loading="lazy" src="images/activities/highland-park/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:View_of_Highland_Park_from_Avenue_64.jpg" aria-label="Highland Park photo 2"><img loading="lazy" src="images/activities/highland-park/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Highland_Park%2C_Los_Angeles%2C_CA%2C_USA_-_panoramio_%281%29.jpg" aria-label="Highland Park photo 3"><img loading="lazy" src="images/activities/highland-park/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/atwater-village/01.jpg" alt=""><div><span class="meta">Northeast LA · 3 photos</span><h3>Atwater Village</h3><span class="caption">Start on Glendale Boulevard for a neighborhood food stop. The LA River is nearby if you want to add a separate paved path outing.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start near Glendale Boulevard and Larga Avenue · River access is a separate stop</p><div class="activity-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Glendale+Boulevard+and+Larga+Avenue+Atwater+Village" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Atwater%20Village%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Atwater Village photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:AtwaterVillage.jpg" aria-label="Atwater Village photo 1"><img loading="lazy" src="images/activities/atwater-village/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:AtwaterVillageSign.jpg" aria-label="Atwater Village photo 2"><img loading="lazy" src="images/activities/atwater-village/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Los_Angeles_River_Atwater_LA_Mar23_A7R_04054.jpg" aria-label="Atwater Village photo 3"><img loading="lazy" src="images/activities/atwater-village/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/downtown-culver-city/01.jpg" alt=""><div><span class="meta">Westside · 3 photos</span><h3>Downtown Culver City</h3><span class="caption">Cafés and restaurants around the Culver Hotel and the Culver Steps make this an easy short stop. The Museum of Jurassic Technology is nearby.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start near Culver Boulevard and Main Street · Public garages nearby</p><div class="activity-links"><a href="https://www.culvercity.org/Explore/Parking" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Downtown%20Culver%20City%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Downtown Culver City photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Culver_City_2026_August_01.jpg" aria-label="Downtown Culver City photo 1"><img loading="lazy" src="images/activities/downtown-culver-city/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Culver_City_2026_August_03.jpg" aria-label="Downtown Culver City photo 2"><img loading="lazy" src="images/activities/downtown-culver-city/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Culver_Theater%2C_Culver_City%2C_California_%28LOC%29_%2855399787323%29.jpg" aria-label="Downtown Culver City photo 3"><img loading="lazy" src="images/activities/downtown-culver-city/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/old-pasadena/01.jpg" alt=""><div><span class="meta">Pasadena · 3 photos</span><h3>Old Pasadena</h3><span class="caption">Explore Colorado Boulevard, the alleys, and the One Colorado courtyard. The main shopping stretch is compact and works well for a meal stop.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start at Colorado Boulevard and Fair Oaks Avenue · Public garages nearby</p><div class="activity-links"><a href="https://www.oldpasadena.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Old%20Pasadena%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Old Pasadena photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Colorado_Boulevard%2C_Old_Pasadena%2C_Pasadena%2C_California_%2814331355317%29.jpg" aria-label="Old Pasadena photo 1"><img loading="lazy" src="images/activities/old-pasadena/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Colorado_Boulevard%2C_Old_Pasadena%2C_Pasadena%2C_California_%2814514406151%29.jpg" aria-label="Old Pasadena photo 2"><img loading="lazy" src="images/activities/old-pasadena/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:3225_Old_Pasadena.jpg" aria-label="Old Pasadena photo 3"><img loading="lazy" src="images/activities/old-pasadena/03.jpg" alt=""></a>
+</div></div></details>
+<details class="beach activity">
+<summary><img class="cover" loading="lazy" src="images/activities/belmont-shore/01.jpg" alt=""><div><span class="meta">Long Beach · 3 photos</span><h3>Belmont Shore</h3><span class="caption">Try 2nd Street for food and shops, or make a separate waterfront stop at Granada Beach. Park at the beach if the shore is your main goal.</span></div><span class="indicator" aria-hidden="true"></span></summary>
+<div class="inside"><p class="activity-hours">Start near 2nd Street and Bay Shore Avenue · Check street meters</p><div class="activity-links"><a href="https://www.belmontshore.org/" target="_blank" rel="noopener">Visitor info ↗</a> <a href="https://www.google.com/maps/search/?api=1&amp;query=Belmont%20Shore%20Los%20Angeles%20California" target="_blank" rel="noopener">Maps ↗</a></div>
+<div class="gallery" tabindex="0" role="region" aria-label="Belmont Shore photos">
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Belmont_Shore_Neighborhood%2C_Long_Beach%2C_California_%286026575151%29.jpg" aria-label="Belmont Shore photo 1"><img loading="lazy" src="images/activities/belmont-shore/01.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Belmont_Shore_Neighborhood%2C_Long_Beach%2C_California_%286026576259%29.jpg" aria-label="Belmont Shore photo 2"><img loading="lazy" src="images/activities/belmont-shore/02.jpg" alt=""></a>
+<a class="photo" href="https://commons.wikimedia.org/wiki/File:Belmont_Shore_and_Belmont_Heights_in_Long_Beach_California.JPG" aria-label="Belmont Shore photo 3"><img loading="lazy" src="images/activities/belmont-shore/03.jpg" alt=""></a>
+</div></div></details>
+</details>
 </section>
 </main>
 <footer><div class="wrap">LA Thanksgiving Trip 2026</div></footer>
@@ -1064,7 +1149,13 @@ function bindGalleryToggle(button, cards) {
   button.addEventListener('click', () => {
     const visible = visibleCards();
     const open = visible.some(card => !card.open);
-    visible.forEach(card => { card.open = open; });
+    visible.forEach(card => {
+      if (open) {
+        const category = card.closest('.activity-category');
+        if (category) category.open = true;
+      }
+      card.open = open;
+    });
     updateLabel();
   });
 }
@@ -1106,6 +1197,7 @@ window.setInterval(() => {
 }, 8000);
 function openBeachSection() {
   if (location.hash === '#beaches') section.open = true;
+  if (location.hash === '#areas-heading') document.querySelector('#areas-heading').closest('details').open = true;
 }
 openBeachSection();
 window.addEventListener('hashchange', openBeachSection);
