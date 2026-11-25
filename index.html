@@ -43,6 +43,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 <div class="wrap"><div class="eyebrow">November 25–29, 2026</div><h1 id="trip-title">LA Thanksgiving <em>Trip</em></h1><nav class="trip-nav" aria-label="Trip sections"><a href="#beaches">Beaches</a><a href="#things-to-do">Things to Do</a></nav></div>
 </section>
 <main id="beaches" class="wrap">
+<p id="sync-status" role="status" hidden></p>
 <details id="beaches-section"><summary class="section-head"><div><h2>Beaches</h2><p>19 beaches · 211 gallery photos</p></div><span class="indicator" aria-hidden="true"></span></summary>
 <div class="section-tools"><button class="toggle" type="button" id="toggle-all" hidden>Expand all galleries</button></div>
 <div id="beach-list">
@@ -903,7 +904,12 @@ const viewerImage = document.querySelector('#viewer-image');
 let photos = [];
 let index = 0;
 
-const visibilityStorageKey = 'la-thanksgiving-2026-minimized-cards';
+const visibilityStorageKey = 'la-thanksgiving-2026-shared-card-cache';
+const visibilityEndpoint = 'https://la-thanksgiving-2026-card-sync.ardentkrill13.chatgpt.site/cards';
+const syncStatus = document.querySelector('#sync-status');
+const pendingChanges = new Map();
+const visibilityControls = new Map();
+let syncing = false;
 const minimizedCards = new Set();
 try {
   const saved = JSON.parse(localStorage.getItem(visibilityStorageKey) || '[]');
@@ -912,6 +918,59 @@ try {
   }
 } catch {
   // The controls still work for this visit when storage is unavailable.
+}
+
+async function syncCardVisibility() {
+  if (syncing) return;
+  syncing = true;
+  let completed = false;
+  try {
+    for (const [key, change] of [...pendingChanges]) {
+      const response = await fetch(visibilityEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, hidden: change.hidden }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!response.ok) throw new Error('Unable to save visibility');
+      if (pendingChanges.get(key) === change) pendingChanges.delete(key);
+    }
+
+    const response = await fetch(visibilityEndpoint, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) throw new Error('Unable to fetch visibility');
+    const { hidden } = await response.json();
+    if (!Array.isArray(hidden)) throw new Error('Invalid visibility data');
+    minimizedCards.clear();
+    hidden.filter(key => visibilityControls.has(key)).forEach(key => minimizedCards.add(key));
+    for (const [key, { hidden: hide }] of pendingChanges) {
+      if (hide) minimizedCards.add(key);
+      else minimizedCards.delete(key);
+    }
+    for (const [key, { card, showState }] of visibilityControls) {
+      if (card.classList.contains('is-minimized') !== minimizedCards.has(key)) {
+        showState();
+        card.dispatchEvent(new Event('visibilitychange'));
+      }
+    }
+    try {
+      localStorage.setItem(visibilityStorageKey, JSON.stringify([...minimizedCards]));
+    } catch {
+      // The shared list still works when browser storage is unavailable.
+    }
+    syncStatus.hidden = true;
+    completed = true;
+  } catch {
+    syncStatus.textContent = pendingChanges.size
+      ? 'Shared changes are waiting to sync. Keep this tab open to retry.'
+      : 'Shared settings are temporarily unavailable.';
+    syncStatus.hidden = false;
+  } finally {
+    syncing = false;
+    if (completed && pendingChanges.size) void syncCardVisibility();
+  }
 }
 
 function bindCardVisibility(card, group) {
@@ -934,6 +993,7 @@ function bindCardVisibility(card, group) {
     button.textContent = action;
     button.setAttribute('aria-label', action + ' ' + title);
   }
+  visibilityControls.set(key, { card, showState });
   showState();
   summary.addEventListener('click', event => {
     if (minimizedCards.has(key)) event.preventDefault();
@@ -944,12 +1004,9 @@ function bindCardVisibility(card, group) {
     if (minimizedCards.has(key)) minimizedCards.delete(key);
     else minimizedCards.add(key);
     showState();
-    try {
-      localStorage.setItem(visibilityStorageKey, JSON.stringify([...minimizedCards]));
-    } catch {
-      // Keep the in-memory choice for this visit.
-    }
+    pendingChanges.set(key, { hidden: minimizedCards.has(key) });
     card.dispatchEvent(new Event('visibilitychange'));
+    void syncCardVisibility();
   });
 }
 
@@ -1006,6 +1063,11 @@ beachCards.forEach(card => bindCardVisibility(card, 'beach'));
 activityCards.forEach(card => bindCardVisibility(card, 'activity'));
 bindGalleryToggle(document.querySelector('#toggle-all'), beachCards);
 bindGalleryToggle(document.querySelector('#toggle-activities'), activityCards);
+void syncCardVisibility();
+window.addEventListener('focus', syncCardVisibility);
+window.setInterval(() => {
+  if (!document.hidden) void syncCardVisibility();
+}, 8000);
 function openBeachSection() {
   if (location.hash === '#beaches') section.open = true;
 }
