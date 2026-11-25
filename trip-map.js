@@ -120,7 +120,7 @@
     pins.clearLayers();
     for (const stop of visible) {
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
-        .addTo(pins).bindPopup(() => stopPopup(stop), { maxWidth: 235, keepInView: true });
+        .addTo(pins).bindPopup(() => stopPopup(stop), { className: 'stop-pin-popup', maxWidth: 235, keepInView: true });
       marker.on('popupopen', () => showCard(stop));
     }
   }
