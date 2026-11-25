@@ -33,3 +33,9 @@
   #trip-map { height: clamp(260px, 52svh, 490px); }
   .map-results { max-height: none; }
 }
+.map-column { min-width: 0; }
+#map-stop-panel { margin-top: 12px; scroll-margin-top: 12px; }
+#map-stop-card .beach { margin-top: 8px; }
+.map-popup-photo { display: block; max-width: 100%; width: 220px; height: 116px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; background: #dae6df; }
+.map-popup button, .map-popup a { display: inline-flex; min-height: 44px; align-items: center; padding: 0 8px; font-weight: 650; }
+.map-popup button { border: 0; border-radius: 6px; margin: 4px 4px 0 0; background: var(--ink); color: #fffdf7; cursor: pointer; }

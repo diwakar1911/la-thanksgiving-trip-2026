@@ -71,7 +71,13 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
   </div>
   <p id="map-status" role="status"></p>
   <div class="map-layout">
-    <div id="trip-map" aria-label="Interactive map of trip stops"></div>
+    <div class="map-column">
+      <div id="trip-map" aria-label="Interactive map of trip stops"></div>
+      <div id="map-stop-panel" hidden>
+        <button class="toggle" type="button" id="map-stop-close">Close stop details</button>
+        <div id="map-stop-card"></div>
+      </div>
+    </div>
     <div class="map-results">
       <h3 id="map-results-title">Trip stops</h3>
       <ol id="map-stops" aria-labelledby="map-results-title"></ol>

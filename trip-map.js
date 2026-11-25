@@ -2,6 +2,9 @@
   const view = document.querySelector('#map-view');
   const listView = document.querySelector('main');
   const canvas = document.querySelector('#trip-map');
+  const panel = document.querySelector('#map-stop-panel');
+  const panelCard = document.querySelector('#map-stop-card');
+  const closeDetails = document.querySelector('#map-stop-close');
   const status = document.querySelector('#map-status');
   const results = document.querySelector('#map-stops');
   const locate = document.querySelector('#map-location');
@@ -10,6 +13,7 @@
   const stops = [...listView.querySelectorAll('[data-point]')].map(card => ({
     card,
     name: card.querySelector('summary h3').textContent.trim(),
+    photo: card.querySelector('summary .cover').src,
     point: card.dataset.point.split(',').map(Number),
     kind: card.classList.contains('activity') ? 'activity' : 'beach',
     directions: card.querySelector('a[href^="https://www.google.com/maps/"]').href,
@@ -22,6 +26,7 @@
   let you;
   let loading;
   let fitOnLoad = true;
+  let selected;
 
   function distance(point) {
     const radians = degrees => degrees * Math.PI / 180;
@@ -47,15 +52,47 @@
     return link;
   }
 
+  function restoreCard() {
+    if (!selected) return;
+    const { card, placeholder, wasOpen, wasHidden } = selected;
+    placeholder.replaceWith(card);
+    card.open = wasOpen && !card.classList.contains('is-minimized');
+    card.hidden = wasHidden;
+    selected = undefined;
+    panel.hidden = true;
+  }
+
   function showCard(stop) {
-    history.pushState(null, '', stop.kind === 'beach' ? '#beaches' : '#things-to-do');
-    switchView();
-    for (let detail = stop.card; detail; detail = detail.parentElement.closest('details')) {
-      detail.open = true;
-    }
-    const summary = stop.card.querySelector('summary');
-    summary.focus({ preventScroll: true });
-    summary.scrollIntoView({ block: 'start' });
+    restoreCard();
+    const { card } = stop;
+    const placeholder = document.createComment('Trip stop list position');
+    selected = { card, placeholder, wasOpen: card.open, wasHidden: card.hidden };
+    card.before(placeholder);
+    panelCard.append(card);
+    card.hidden = false;
+    card.open = true;
+    panel.hidden = false;
+    map?.closePopup();
+    closeDetails.focus({ preventScroll: true });
+    panel.scrollIntoView({ block: 'start' });
+  }
+
+  function stopPopup(stop, name, detail) {
+    const popup = document.createElement('div');
+    popup.className = 'map-popup';
+    const photo = document.createElement('img');
+    photo.className = 'map-popup-photo';
+    photo.src = stop.photo;
+    photo.alt = stop.name;
+    photo.width = 220;
+    photo.height = 116;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = 'View stop';
+    button.setAttribute('aria-controls', panel.id);
+    button.addEventListener('click', () => showCard(stop));
+    popup.append(photo, name.cloneNode(true), detail.cloneNode(true), button, directions(stop));
+    return popup;
   }
 
   function pinIcon(kind) {
@@ -101,18 +138,8 @@
         button.addEventListener('click', () => showCard(stop));
         continue;
       }
-      const popup = document.createElement('div');
-      popup.className = 'map-popup';
-      const details = document.createElement('a');
-      details.href = stop.kind === 'beach' ? '#beaches' : '#things-to-do';
-      details.textContent = 'View stop';
-      details.addEventListener('click', event => {
-        event.preventDefault();
-        showCard(stop);
-      });
-      popup.append(name.cloneNode(true), detail.cloneNode(true), details, directions(stop));
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
-        .addTo(pins).bindPopup(popup);
+        .addTo(pins).bindPopup(() => stopPopup(stop, name, detail), { maxWidth: 235 });
       button.addEventListener('click', () => {
         canvas.scrollIntoView({ block: 'nearest' });
         map.setView(stop.point, Math.max(map.getZoom(), 14));
@@ -189,6 +216,7 @@
       if (map) sizeMap();
       else loadMap();
     } else {
+      restoreCard();
       mapLink.removeAttribute('aria-current');
       if (location.hash === '#beaches') document.querySelector('#beaches-section').open = true;
       if (location.hash === '#beaches' || location.hash === '#things-to-do') {
@@ -218,6 +246,11 @@
         : 'Couldn’t get your location. Try again, or browse the map.';
     }, { timeout: 10000, maximumAge: 60000 });
   });
+  closeDetails.addEventListener('click', () => {
+    restoreCard();
+    document.querySelector('#map-title').focus({ preventScroll: true });
+    view.scrollIntoView({ block: 'start' });
+  });
   fit.addEventListener('click', fitPins);
   for (const button of filters) {
     button.addEventListener('click', () => {
@@ -229,6 +262,7 @@
   }
 
   const visibility = new MutationObserver(() => {
+    if (selected?.card.classList.contains('is-minimized')) restoreCard();
     if (!view.hidden) render();
   });
   stops.forEach(({ card }) => visibility.observe(card, { attributes: true, attributeFilter: ['class'] }));
