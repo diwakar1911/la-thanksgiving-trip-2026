@@ -3,23 +3,15 @@
 #map-view { padding-block: 20px 30px; }
 .map-toolbar, .map-controls, #map-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .map-toolbar h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin-right: auto; }
-.map-toolbar a { text-decoration: none; }
 .map-controls { justify-content: space-between; margin-top: 12px; }
 #map-view .toggle { min-height: 44px; font-size: .85rem; font-weight: 650; }
 #map-location, #map-filters [aria-pressed="true"] { color: #fffdf7; background: var(--ink); border-color: var(--ink); }
 #map-status { margin: 8px 0; font-size: .85rem; color: var(--muted); }
 #map-status:empty { display: none; }
-.map-layout { display: grid; grid-template-columns: minmax(0,2fr) minmax(250px,1fr); gap: 14px; margin-top: 10px; }
-#trip-map, .map-results { border: 1px solid var(--line); border-radius: 14px; }
+#trip-map { margin-top: 10px; border: 1px solid var(--line); border-radius: 14px; }
 #trip-map { height: clamp(330px, 61vh, 650px); background: #dae6df; isolation: isolate; }
 #trip-map[hidden], #map-view [hidden] { display: none; }
-.map-results { background: #fffdf7; padding: 12px; max-height: clamp(330px, 61vh, 650px); overflow: auto; }
-.map-results h3 { font: 750 1rem/1.2 system-ui,sans-serif; margin: 3px 0 8px; }
-#map-stops { list-style: none; padding: 0; margin: 0; }
-#map-stops li { border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; }
-.map-stop { display: block; padding: 8px 2px; text-align: left; flex: 1; min-height: 44px; border: 0; background: transparent; cursor: pointer; text-decoration: none; }
-.map-stop small, .map-popup small { display: block; color: var(--muted); }
-.map-directions { display: grid; place-items: center; min-height: 44px; font-size: .8rem; }
+.map-popup small { display: block; color: var(--muted); }
 .map-popup strong { font-size: .95rem; }
 .map-pin { width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; background: #a44525; box-shadow: 0 1px 5px #0007; }
 .map-pin.beach-pin { background: #126965; }
@@ -28,13 +20,9 @@
 #trip-map .leaflet-control-zoom a { width: 38px; height: 38px; line-height: 38px; }
 @media (max-width: 700px) {
   #map-view { width: calc(100% - 20px); padding-top: 12px; }
-  .map-layout { grid-template-columns: minmax(0,1fr); gap: 8px; }
   #trip-map { height: clamp(260px, 52svh, 490px); }
-  .map-results { max-height: none; }
 }
-.map-column { min-width: 0; }
 #map-stop-panel { margin-top: 12px; scroll-margin-top: 12px; }
 #map-stop-card .beach { margin-top: 8px; }
+.map-popup a { display: inline-block; padding: 6px 0; font-weight: 650; }
 .map-popup-photo { display: block; max-width: 100%; width: 120px; height: 64px; object-fit: cover; border-radius: 8px; margin-bottom: 5px; background: #dae6df; }
-.map-popup button, .map-popup a { display: inline-flex; min-height: 34px; align-items: center; padding: 0 6px; font: inherit; font-weight: 650; }
-.map-popup button { border: 0; background: transparent; color: #0078a8; text-decoration: underline; cursor: pointer; }

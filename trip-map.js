@@ -6,7 +6,6 @@
   const panelCard = document.querySelector('#map-stop-card');
   const closeDetails = document.querySelector('#map-stop-close');
   const status = document.querySelector('#map-status');
-  const results = document.querySelector('#map-stops');
   const locate = document.querySelector('#map-location');
   const fit = document.querySelector('#map-reset');
   const filters = [...document.querySelectorAll('#map-filters button')];
@@ -75,12 +74,7 @@
     panel.hidden = false;
   }
 
-  function scrollToCard() {
-    closeDetails.focus({ preventScroll: true });
-    panel.scrollIntoView({ block: 'start' });
-  }
-
-  function stopPopup(stop, name, detail) {
+  function stopPopup(stop) {
     const popup = document.createElement('div');
     popup.className = 'map-popup';
     const photo = document.createElement('img');
@@ -89,16 +83,11 @@
     photo.alt = stop.name;
     photo.width = 120;
     photo.height = 64;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = 'View stop';
-    button.setAttribute('aria-controls', panel.id);
-    button.addEventListener('click', () => {
-      showCard(stop);
-      map.closePopup();
-      scrollToCard();
-    });
-    popup.append(photo, name.cloneNode(true), detail.cloneNode(true), button, directions(stop));
+    const name = document.createElement('strong');
+    name.textContent = stop.name;
+    const detail = document.createElement('small');
+    detail.textContent = (position ? distance(stop.point).toFixed(1) + ' mi straight-line · ' : '') + stop.parking;
+    popup.append(photo, name, detail, directions(stop));
     return popup;
   }
 
@@ -116,47 +105,14 @@
   }
 
   function render() {
+    if (!pins) return;
     const visible = visibleStops();
-    if (position) visible.sort((a, b) => distance(a.point) - distance(b.point));
-    document.querySelector('#map-results-title').textContent = position ? 'Nearest stops · straight-line miles' : 'Trip stops';
-    results.replaceChildren();
-    if (!visible.length) {
-      const empty = document.createElement('li');
-      empty.textContent = 'No stops for this filter.';
-      results.append(empty);
-    }
-    pins?.clearLayers();
+    if (selected && !visible.some(stop => stop.card === selected.card)) restoreCard();
+    pins.clearLayers();
     for (const stop of visible) {
-      const row = document.createElement('li');
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'map-stop';
-      const name = document.createElement('strong');
-      name.textContent = stop.name;
-      const detail = document.createElement('small');
-      detail.textContent = (position ? distance(stop.point).toFixed(1) + ' mi · ' : '') + stop.parking;
-      button.append(name, detail);
-      const link = directions(stop);
-      link.className = 'map-directions';
-      row.append(button, link);
-      results.append(row);
-
-      if (!map) {
-        button.addEventListener('click', () => {
-          showCard(stop);
-          scrollToCard();
-        });
-        continue;
-      }
       const marker = L.marker(stop.point, { icon: pinIcon(stop.kind), title: stop.name, alt: stop.name })
-        .addTo(pins).bindPopup(() => stopPopup(stop, name, detail), { maxWidth: 235 });
+        .addTo(pins).bindPopup(() => stopPopup(stop), { maxWidth: 235 });
       marker.on('popupopen', () => showCard(stop));
-      button.addEventListener('click', () => {
-        showCard(stop);
-        canvas.scrollIntoView({ block: 'nearest' });
-        map.setView(stop.point, Math.max(map.getZoom(), 14));
-        marker.openPopup();
-      });
     }
   }
 
@@ -195,14 +151,14 @@
         maxZoom: 19
       }).addTo(map);
       tiles.once('tileerror', () => {
-        if (!status.textContent) status.textContent = 'Some map tiles couldn’t load. Directions are available in the list.';
+        if (!status.textContent) status.textContent = 'Some map tiles couldn’t load. Tap a pin for directions or switch to List view.';
       });
       fit.hidden = false;
       render();
       if (!view.hidden) sizeMap();
     }).catch(() => {
       canvas.hidden = true;
-      if (!status.textContent) status.textContent = 'The map couldn’t load. You can still browse stops and open directions below.';
+      if (!status.textContent) status.textContent = 'The map couldn’t load. Open List view to browse stops and get directions.';
     });
     return loading;
   }
@@ -247,7 +203,7 @@
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       position = [coords.latitude, coords.longitude];
       locate.disabled = false;
-      status.textContent = 'Stops are sorted by distance from you.';
+      status.textContent = 'Tap a pin to see its distance from you.';
       render();
       if (map && !view.hidden) centerLocation();
       else fitOnLoad = true;

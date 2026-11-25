@@ -48,7 +48,7 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 .admission-price.free-admission{background:#e8eee2;color:var(--ink)}
 </style>
 
-<link rel="stylesheet" href="trip-map.css?v=3">
+<link rel="stylesheet" href="trip-map.css?v=4">
 </head>
 <body>
 <section class="hero" aria-labelledby="trip-title">
@@ -69,18 +69,10 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
     <button class="toggle" type="button" id="map-reset" hidden>Fit pins</button>
   </div>
   <p id="map-status" role="status"></p>
-  <div class="map-layout">
-    <div class="map-column">
-      <div id="trip-map" aria-label="Interactive map of trip stops"></div>
-      <div id="map-stop-panel" hidden>
-        <button class="toggle" type="button" id="map-stop-close">Close stop details</button>
-        <div id="map-stop-card"></div>
-      </div>
-    </div>
-    <div class="map-results">
-      <h3 id="map-results-title">Trip stops</h3>
-      <ol id="map-stops" aria-labelledby="map-results-title"></ol>
-    </div>
+  <div id="trip-map" aria-label="Interactive map of trip stops"></div>
+  <div id="map-stop-panel" hidden>
+    <button class="toggle" type="button" id="map-stop-close">Close stop details</button>
+    <div id="map-stop-card"></div>
   </div>
 </section>
 <main id="beaches" class="wrap">
@@ -1314,6 +1306,6 @@ viewer.addEventListener('keydown', event => {
   }
 });
 </script>
-<script src="trip-map.js?v=6" defer></script>
+<script src="trip-map.js?v=7" defer></script>
 </body>
 </html>
