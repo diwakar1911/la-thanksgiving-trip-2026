@@ -67,13 +67,15 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
   <h2 id="map-title" tabindex="-1">Trip map</h2>
   <div class="map-controls">
     <div role="group" aria-label="Show on map" id="map-filters">
-      <button class="toggle" type="button" data-kind="all" aria-pressed="true">All</button>
+      <button class="toggle" type="button" data-kind="shortlist" aria-pressed="true">Shortlist</button>
+      <button class="toggle" type="button" data-kind="all" aria-pressed="false">All</button>
       <button class="toggle" type="button" data-kind="beach" aria-pressed="false">Beaches</button>
       <button class="toggle" type="button" data-kind="activity" aria-pressed="false">Things to Do</button>
     </div>
     <button class="toggle" type="button" id="map-location">Use my location</button>
     <button class="toggle" type="button" id="map-reset" hidden>Fit pins</button>
   </div>
+  <p id="map-shortlist-empty" role="status" hidden>No visible shortlisted stops. Choose All to browse the map.</p>
   <p id="map-status" role="status"></p>
   <div class="map-frame">
     <div id="trip-map" aria-label="Interactive map of trip stops"></div>
@@ -1906,6 +1908,6 @@ viewer.addEventListener('keydown', event => {
   }
 });
 </script>
-<script src="trip-map.js?v=11" defer></script>
+<script src="trip-map.js?v=12" defer></script>
 </body>
 </html>
