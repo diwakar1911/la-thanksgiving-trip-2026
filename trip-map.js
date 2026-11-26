@@ -10,6 +10,7 @@
   const filters = [...document.querySelectorAll('#map-filters button')];
   const stops = [...listView.querySelectorAll('[data-point]')].map(card => ({
     card,
+    star: card.querySelector('summary .shortlist-button'),
     name: card.querySelector('summary h3').textContent.trim(),
     photo: card.querySelector('summary .cover').src,
     point: card.dataset.point.split(',').map(Number),
@@ -18,7 +19,8 @@
     admission: card.querySelector('summary .admission-price')?.textContent.trim(),
     parking: card.querySelector('.parking-price').textContent.trim()
   }));
-  let filter = 'all';
+  let filter = filters.find(button => button.getAttribute('aria-pressed') === 'true')?.dataset.kind || 'all';
+  const emptyShortlist = document.querySelector('#map-shortlist-empty');
   let position;
   let map;
   let pins;
@@ -38,7 +40,8 @@
 
   function visibleStops() {
     return stops.filter(stop => !stop.card.classList.contains('is-minimized') &&
-      (filter === 'all' || stop.kind === filter));
+      (filter === 'shortlist' ? stop.star?.getAttribute('aria-pressed') === 'true' :
+        filter === 'all' || stop.kind === filter));
   }
 
   function directions(stop) {
@@ -114,8 +117,9 @@
   }
 
   function render() {
-    if (!pins) return;
     const visible = visibleStops();
+    if (emptyShortlist) emptyShortlist.hidden = filter !== 'shortlist' || visible.length > 0;
+    if (!pins) return;
     if (selected && !visible.some(stop => stop.card === selected.card)) restoreCard();
     pins.clearLayers();
     for (const stop of visible) {
@@ -238,11 +242,17 @@
     });
   }
 
-  const visibility = new MutationObserver(() => {
-    if (selected?.card.classList.contains('is-minimized')) restoreCard();
-    if (!view.hidden) render();
+  const visibility = new MutationObserver(changes => {
+    if (view.hidden) return;
+    if (filter !== 'shortlist' && changes.every(change => change.attributeName === 'aria-pressed')) return;
+    const hadPins = pins?.getLayers().length > 0;
+    render();
+    if (map && filter === 'shortlist' && !hadPins && !position) fitPins();
   });
-  stops.forEach(({ card }) => visibility.observe(card, { attributes: true, attributeFilter: ['class'] }));
+  for (const { card, star } of stops) {
+    visibility.observe(card, { attributeFilter: ['class'] });
+    if (star) visibility.observe(star, { attributeFilter: ['aria-pressed'] });
+  }
   window.addEventListener('hashchange', switchView);
   switchView();
 })();
