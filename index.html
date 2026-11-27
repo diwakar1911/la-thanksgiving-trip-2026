@@ -52,6 +52,9 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 #shortlist{padding-block:24px 48px}
 #shortlist h2{font-size:clamp(1.8rem,5vw,2.7rem)}
 #shortlist:not([hidden])~main{display:none}
+#shortlist-filters{display:flex;flex-wrap:wrap;gap:.35rem;margin:.65rem 0 .9rem}
+#shortlist-filters .toggle{font-size:.8rem;padding:.3rem .65rem}
+#shortlist-filters .toggle[aria-pressed="true"]{background:var(--ink);color:#fffdf7;border-color:var(--ink)}
 .shortlist-items{list-style:none;padding:0;margin:12px 0}
 #sync-status{margin:4px 0;font-size:.8rem}
 .stop-hours{margin:.15rem 0 .8rem;padding:.55rem .7rem;background:#f0eee5;border-radius:8px;font-size:.86rem}.stop-hours a{font-size:.8em;white-space:nowrap}#map-stop-card .stop-hours{font-size:.74rem;padding:.4rem .55rem}
@@ -92,7 +95,12 @@ dialog{max-width:min(1000px,95vw);width:100%;border:0;background:#102c29;color:#
 </section>
 <section id="shortlist" class="wrap" aria-labelledby="shortlist-title" hidden>
   <h2 id="shortlist-title" tabindex="-1">Shortlist</h2>
-  <p id="shortlist-empty">Tap a star on any stop to save it here.</p>
+  <div id="shortlist-filters" role="group" aria-label="Filter saved stops">
+    <button class="toggle" type="button" data-filter="all" aria-pressed="true">All</button>
+    <button class="toggle" type="button" data-filter="food" aria-pressed="false">Food</button>
+    <button class="toggle" type="button" data-filter="bikes" aria-pressed="false">Bikes</button>
+  </div>
+  <p id="shortlist-empty" role="status">Tap a star on any stop to save it here.</p>
   <ul id="shortlist-items" class="shortlist-items"></ul>
 </section>
 <main id="beaches" class="wrap">
@@ -1901,6 +1909,8 @@ const shortlistControls = new Map();
 const shortlistRows = new Map();
 const shortlistPage = document.querySelector('#shortlist');
 const shortlistItems = document.querySelector('#shortlist-items');
+const shortlistFilters = [...document.querySelectorAll('#shortlist-filters button')];
+let shortlistFilter = 'all';
 const shortlistLink = document.querySelector('#shortlist-link');
 const shortlistStorageKey = 'la-thanksgiving-2026-shared-shortlist-cache';
 
@@ -1924,7 +1934,7 @@ function changeShortlist(key, shortlisted) {
 
 function renderShortlist() {
   const rows = [];
-  for (const [key, { card, button, title }] of shortlistControls) {
+  for (const [key, { card, button, title, category }] of shortlistControls) {
     const saved = shortlistedCards.has(key);
     button.setAttribute('aria-pressed', String(saved));
     button.setAttribute('aria-label', (saved ? 'Remove from shortlist: ' : 'Shortlist: ') + title);
@@ -1933,6 +1943,8 @@ function renderShortlist() {
       shortlistRows.delete(key);
       continue;
     }
+    if (shortlistFilter === 'food' && category !== 'food-heading' && category !== 'popular-food-heading') continue;
+    if (shortlistFilter === 'bikes' && category !== 'riding-heading') continue;
     let row = shortlistRows.get(key);
     if (!row) {
       row = document.createElement('li');
@@ -1960,7 +1972,13 @@ function renderShortlist() {
     rows.push(row);
   }
   shortlistItems.replaceChildren(...rows);
-  document.querySelector('#shortlist-empty').hidden = rows.length > 0;
+  const empty = document.querySelector('#shortlist-empty');
+  empty.hidden = rows.length > 0;
+  empty.textContent = {
+    all: 'Tap a star on any stop to save it here.',
+    food: 'No food spots saved yet.',
+    bikes: 'No bike routes saved yet.',
+  }[shortlistFilter];
 }
 
 try {
@@ -2057,7 +2075,8 @@ function bindCardVisibility(card, group) {
     event.stopPropagation();
     changeShortlist(key, !shortlistedCards.has(key));
   });
-  shortlistControls.set(key, { card, button: save, title });
+  const category = card.closest('.activity-category')?.getAttribute('aria-labelledby');
+  shortlistControls.set(key, { card, button: save, title, category });
   actions.append(save, button, summary.querySelector('.indicator'));
   summary.append(actions);
 
@@ -2145,6 +2164,13 @@ function bindPhotoGallery(card) {
 [...beachCards, ...activityCards].forEach(bindPhotoGallery);
 beachCards.forEach(card => bindCardVisibility(card, 'beach'));
 activityCards.forEach(card => bindCardVisibility(card, 'activity'));
+for (const button of shortlistFilters) {
+  button.addEventListener('click', () => {
+    shortlistFilter = button.dataset.filter;
+    shortlistFilters.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+    renderShortlist();
+  });
+}
 renderShortlist();
 showShortlist();
 window.addEventListener('hashchange', showShortlist);
