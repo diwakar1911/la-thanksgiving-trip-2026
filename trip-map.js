@@ -10,6 +10,7 @@
   const filters = [...document.querySelectorAll('#map-filters button')];
   const stops = [...listView.querySelectorAll('[data-point]')].map(card => ({
     card,
+    category: card.closest('.activity-category')?.getAttribute('aria-labelledby'),
     star: card.querySelector('summary .shortlist-button'),
     name: card.querySelector('summary h3').textContent.trim(),
     photo: card.querySelector('summary .cover').src,
@@ -39,9 +40,13 @@
   }
 
   function visibleStops() {
-    return stops.filter(stop => !stop.card.classList.contains('is-minimized') &&
-      (filter === 'shortlist' ? stop.star?.getAttribute('aria-pressed') === 'true' :
-        filter === 'all' || stop.kind === filter));
+    return stops.filter(stop => {
+      if (stop.card.classList.contains('is-minimized')) return false;
+      if (filter === 'shortlist') return stop.star?.getAttribute('aria-pressed') === 'true';
+      if (filter === 'food') return stop.category === 'food-heading' || stop.category === 'popular-food-heading';
+      if (filter === 'bikes') return stop.category === 'riding-heading';
+      return filter === 'all' || stop.kind === filter;
+    });
   }
 
   function directions(stop) {
