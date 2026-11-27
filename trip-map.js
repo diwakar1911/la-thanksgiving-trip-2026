@@ -204,7 +204,6 @@
       else loadMap();
     } else {
       restoreCard();
-      if (location.hash === '#beaches') document.querySelector('#beaches-section').open = true;
       if (location.hash === '#beaches' || location.hash === '#things-to-do') {
         document.querySelector(location.hash).scrollIntoView();
       }
